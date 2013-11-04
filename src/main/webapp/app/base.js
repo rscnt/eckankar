@@ -40,10 +40,12 @@ var base = {
 	},
 
 	set_banner : function(container_name, base_url, images) {
-		var cntnr_name = container_name ? container_name : options.el_banner_id, imgs_bnnr = images ? images
+		var cntnr_name = typeof container_name !== 'undefined' ? container_name
+				: options.el_banner_id, imgs_bnnr = typeof images !== 'undefined' ? images
 				: options.images, current_img = Math.floor(Math.random()
-				* (imgs_bnnr.length - 0) + 0);
-		base.set_img_banner($(cntnr_name), base_url + imgs_bnnr[current_img]);
+				* (imgs_bnnr.length - 0) + 0), bsURL = typeof base_url !== 'undefined' ? base_url
+				: options.images_url;
+		base.set_img_banner($(cntnr_name), bsURL + imgs_bnnr[current_img]);
 		return true;
 	},
 
