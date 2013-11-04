@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="es"
+	 xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8" />
+	<title>ECKANKAR</title>
+	<script src="/assets/js/vendor/jquery-1.10.2.min.js"></script>
+	<!-- vendor gumby -->
+	<link rel="stylesheet" href="/assets/styles/vendor/gumby/css/gumby.css" />
+	<script src="/assets/styles/vendor/gumby/js/libs/modernizr-2.6.2.min.js"></script>
+	<!-- vendor gumby -->
+	<link rel="stylesheet" href="/assets/styles/base.css" />
+	<script src="/app/base.js" type="text/javascript"></script>
+	<script src="/app/base.playlist.js" type="text/javascript"></script>
+</head>
+<body>
+	<!-- contains all gumby ui awesome shits -->
+	<script src="/assets/styles/vendor/gumby/js/libs/gumby.min.js"></script>
+	<script src="/assets/styles/vendor/gumby/js/main.js"></script>
+
+	<div class="row navbar" id="main-nav">
+		<a href="#" class="toggle" gumby-trigger="#main-nav>ul">
+			<i class="icon-menu"></i>
+		</a>
+		<h4 class="three columns logo">
+			<a href="/">
+				ECKANKAR
+			</a>
+		</h4>
+
+		<ul class="seven columns">
+			<li><a href="#artistas">
+				Aristas
+				<i class="icon-users"></i>
+			</a></li>
+			<li><a href="#albumes">
+				Albumes
+				<i class="icon-music"></i>
+			</a></li>
+			<li><a href="/upload">
+				Subir Musica
+				<i class="icon-upload-cloud"></i>
+			</a></li>
+			<li>
+				<a href="#usuario">
+					rscnt
+					<i class="icon-user"></i>
+				</a>
+				<div class="dropdown">
+					<ul>		
+						<li><a href="#confs#user">
+							<i class="icon-eye"></i>
+							Ver Perfil
+						</a></li>
+						<li><a href="#confs">
+							<i class="icon-cog"></i>
+							Configurar Sistema
+						</a></li>
+						<li><a href="#logout">
+							<i class="icon-logout"></i>
+							Salir
+						</a></li>
+					</ul>
+				</div>
+			</li>
+		</ul>
+
+	</div>
+
+	<div class="row" id="banner-container">
+		<div class="twelve columns" id="banner-inner">
+<!-- 			<div class="parallax" gumby-parallax="1.0" alt="" id="banner-top" />	 -->
+			<div id="banner-top" ></div>
+		</div>
+	</div>
+
+	<div class="row" id="main-container">
+		<div id="albumes-recientes" class="six columns">
+			<h4 class="l-centered">
+				Albumes Recientes.
+			</h4>
+			<hr/>
+			<div class="row">
+				<section class="twelve columns">
+				    <article class="default alert valign row">
+				      <div class="l-centered">
+				        <img class="album-cover"
+								src="/assets/img/cover/amon.jpg" />
+				      </div>
+				      <div>
+				        <h4> Twilight of... </h4>
+				        <p>Amon Amarth.</p>
+				      </div>
+				    </article>
+
+				    <article class="default alert valign row">
+				      <div class="l-centered">
+				        <img class="album-cover"
+	                		src="/assets/img/cover/octavarium.jpg"
+	                		alt=""  />
+				      </div>
+				      <div>
+						<h4> Octavarium </h4>
+						<p> Dream Theater </p>
+				      </div>
+				    </article>
+
+				    <article class="default alert valign row">
+				      <div class="l-centered">
+				        <img class="album-cover"
+	                		src="/assets/img/cover/glass.jpg"
+	                		alt=""  />
+				      </div>
+				      <div>
+						<h4> Glasswork </h4>
+						<p> Phillip Glass </p>
+				      </div>
+				    </article>
+				    
+	  			</section>
+  			</div>
+			
+		</div>
+
+		<div id="artistas-container" class="six columns">
+			
+			<h4 class="l-centered">
+				Artistas Recientes.
+			</h4>
+			<hr/>
+
+
+			<div class="row">
+				<section class="twelve columns">
+				    <article class="light alert valign row">
+				      <div class="l-centered">
+				        <img class="album-cover"
+								src="/assets/img/artist/phillip.png" />
+				      </div>
+				      <div>
+				        <h4> Philip Glass </h4>
+				        <p> 
+				        	<span class="default label">Classico</span>
+				        </p>
+				      </div>
+				    </article>
+
+				    <article class="light alert valign row">
+				      <div class="l-centered">
+				        <img class="album-cover"
+	                		src="/assets/img/artist/dream_theater.jpg"
+	                		alt=""  />
+				      </div>
+				      <div>
+						<h4>Dream Th...</h4>
+						<p> <span class="default label"> Metal Progresivo </span> </p>
+				      </div>
+				    </article>
+
+				    <article class="valign row">
+				      <div class="l-centered">
+				        <img class="album-cover"
+	                		src="/assets/img/artist/amon_amarth.jpg"
+	                		alt=""  />
+				      </div>
+				      <div>
+						<h4> Amon Am...</h4>
+						<p> <span class="default label"> Viking Metal </span> </p>
+				      </div>
+				    </article>
+				    
+	  			</section>
+  			</div>
+
+		</div>
+	</div>
+
+	<script src="/assets/styles/vendor/gumby/js/gumby.parallax.js"></script>
+
+	<script type="text/javascript">
+		base.init();
+	</script>
+	
+</body>
+</html>
