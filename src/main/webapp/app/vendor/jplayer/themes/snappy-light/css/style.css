@@ -30,8 +30,7 @@ ul {
 	bottom: 0;
 	z-index: 11000;
 	height: 170px;
-	padding-bottom: 10px;
-	margin-bottom: 0px;
+	padding-bottom: 10px; margin-bottom : 0px;
 	-webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 	-webkit-border-radius: 2px;
@@ -47,6 +46,7 @@ ul {
 	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,
 		StartColorStr='#fefefe', EndColorStr='#babec4');
 	-webkit-box-shadow: inset 0 1px 0 0 #fff;
+	margin-bottom: 0px;
 }
 
 .jp-video-full {
@@ -233,11 +233,11 @@ ul {
 	left: 10px;
 }
 
-.jp-random, .jp-loop, .jp-fav, .jp-info, .jp-show-plst, .jp-hide-plst{
+.jp-random,.jp-loop,.jp-fav,.jp-info,.jp-show-plst,.jp-hide-plst {
 	position: absolute;
 	top: 0px;
 	font-size: 10px;
-	width: 28px;	
+	width: 28px;
 	color: #7A7D80;
 }
 
@@ -256,7 +256,8 @@ ul {
 .jp-loop {
 	left: 140px;
 }
-.jp-hide-plst, .jp-show-plst{
+
+.jp-hide-plst,.jp-show-plst {
 	left: 260px;
 }
 
@@ -414,7 +415,7 @@ ul {
 		rgba(0, 0, 0, 0.2);
 	box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.3), inset 0 0 0 1px
 		rgba(0, 0, 0, 0.2);
-		width: 100%;
+	width: 100%;
 }
 
 .jp-play-bar,.jp-volume-bar-value {
@@ -513,6 +514,15 @@ ul {
 	margin-left: -4px;
 }
 
+.jp-loop.active,.jp-random.active {
+	color: #2E69BE;
+}
+
+.jp-button.active a:hover,.jp-controls a:active {
+	background-color: transparent;
+}
+
+
 #playlist {
 	float: left;
 	overflow-y: auto;
@@ -572,7 +582,7 @@ ul {
 }
 
 .song-playlist-song,.song-playlist-artist {
-	text-overflow:ellipsis;
+	text-overflow: ellipsis;
 	display: block;
 	text-align: center;
 }
