@@ -17,7 +17,9 @@ base.playlist = {
 	currentPlaylist : {
 		el : null,
 		cancion : null,
-		id : null
+		id : null,
+		fav: false,
+		fname : null
 	},
 	addtoPlaylist : function(cancion) {
 		songEL = $(_.template(Templates.playlistSong, {
@@ -57,6 +59,10 @@ base.playlist = {
 		$(".song-playlist").removeClass("song-playlist-active");
 		$(base.playlist.currentPlaylist.el).addClass("song-playlist-active");
 
+		base.playlist.showCurrentSong();
+		base.playlist.playSong(base.playlist.currentPlaylist.cancion.fName);
+	},
+	showCurrentSong : function() {
 		Messenger()
 				.post(
 						{
@@ -70,7 +76,6 @@ base.playlist = {
 							showCloseButton : true
 						});
 
-		base.playlist.playSong(base.playlist.currentPlaylist.cancion.fName);
 	},
 	bindEvents : function() {
 		$(".jp-next")
@@ -107,5 +112,28 @@ base.playlist = {
 							e.preventDefault();
 							return false;
 						});
+
+		$(".jp-show-plst").click(function(e) {
+			e.preventDefault();
+			$(".player-container").height(37).animate({
+				height : "170px"
+			}, 500) // show
+			$(".jp-show-plst").hide();
+			$(".jp-hide-plst").show();
+		});
+
+		$(".jp-hide-plst").click(function(e) {
+			e.preventDefault();
+			$(".player-container").height(170).animate({
+				height : "37px"
+			}, 500) // show
+			$(".jp-hide-plst").hide();
+			$(".jp-show-plst").show();
+		});
+
+		$(".jp-info").click(function(e) {
+			base.playlist.showCurrentSong();
+		});
+
 	}
 }

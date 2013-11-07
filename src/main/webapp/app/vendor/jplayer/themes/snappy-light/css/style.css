@@ -30,7 +30,8 @@ ul {
 	bottom: 0;
 	z-index: 11000;
 	height: 170px;
-	margin-bottom: 10px;
+	padding-bottom: 10px;
+	margin-bottom: 0px;
 	-webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 	-webkit-border-radius: 2px;
@@ -157,7 +158,9 @@ ul {
 	border-bottom: solid 1px #a5a8ad;
 	position: relative;
 	overflow: hidden;
-	text-indent: -100%;
+	color: #3e3e3e;
+	font-size: 10px;
+	text-align: center;
 	display: block;
 }
 
@@ -223,7 +226,38 @@ ul {
 .jp-next {
 	position: absolute;
 	top: 0px;
-	left: 100px;
+	left: 92px;
+}
+
+.jp-previous {
+	left: 10px;
+}
+
+.jp-random, .jp-loop, .jp-fav, .jp-info, .jp-show-plst, .jp-hide-plst{
+	position: absolute;
+	top: 0px;
+	font-size: 10px;
+	width: 28px;	
+	color: #7A7D80;
+}
+
+.jp-fav {
+	left: 200px;
+}
+
+.jp-info {
+	left: 228px;
+}
+
+.jp-random {
+	left: 168px;
+}
+
+.jp-loop {
+	left: 140px;
+}
+.jp-hide-plst, .jp-show-plst{
+	left: 260px;
 }
 
 .jp-pause {
@@ -316,9 +350,8 @@ ul {
 	position: absolute;
 	top: 5px;
 	height: 25px;
-	left: 120px;
-	right: 150px;
-	left: 150px;
+	left: 300px;
+	right: 180px;
 }
 
 .jp-volume-bar-container {
@@ -326,7 +359,7 @@ ul {
 	position: absolute;
 	top: 5px;
 	right: 5px;
-	width: 130px;
+	width: 160px;
 	padding: 10px 10px 10px 30px;
 	position: absolute;
 }
@@ -381,6 +414,7 @@ ul {
 		rgba(0, 0, 0, 0.2);
 	box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.3), inset 0 0 0 1px
 		rgba(0, 0, 0, 0.2);
+		width: 100%;
 }
 
 .jp-play-bar,.jp-volume-bar-value {
