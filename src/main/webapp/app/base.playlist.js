@@ -153,7 +153,11 @@ base.playlist = {
 						base.playlist.status.loop = true;
 						$("#jplayer").bind($.jPlayer.event.ended + ".repeat",
 								function() {
-									base.playlist.playNext();
+									if (base.playlist.random) {
+										base.playlist.playRandom();
+									} else {
+										base.playlist.playNext();
+									}
 								});
 					}
 					e.preventDefault();
@@ -170,7 +174,6 @@ base.playlist = {
 						base.playlist.status.random = true;
 						$("#jplayer").bind($.jPlayer.event.ended + ".random",
 								function() {
-									console.log('Random BABY');
 									base.playlist.playRandom();
 								});
 					}

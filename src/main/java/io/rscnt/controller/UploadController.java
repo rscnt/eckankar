@@ -7,11 +7,13 @@ import io.rscnt.model.Genero;
 import io.rscnt.utils.ExifSongInfo;
 import io.rscnt.utils.ExifToolWrapper;
 import io.rscnt.utils.Utils;
+import io.rscnt.service.GeneroService;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 //import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +24,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class UploadController {
+	
+	@Autowired
+	private GeneroService generoService;
 	
 //	@RequestMapping(value = "upload", method = RequestMethod.GET)
 //	public String upload() {
@@ -60,7 +65,10 @@ public class UploadController {
 					Artista artista = new Artista(null,
 							exifSongInfo.getArtist(), null, null);
 					Genero genero = new Genero(null, exifSongInfo.getGenre(),
-							null, null);
+							"A genre this is a genery", "imageTODO.png");
+					
+					generoService.create(genero);
+					
 					Album album = new Album(null, exifSongInfo.getAlbum(),
 							exifSongInfo.getPicture(), null, genero, artista);
 					Cancion cancion = new Cancion(null, audio.getName(),
