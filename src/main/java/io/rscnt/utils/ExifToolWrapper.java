@@ -66,7 +66,7 @@ public class ExifToolWrapper {
 
 			try {
 				imageProcessBuilder = new ProcessBuilder("bash", "-c", exifTool
-						+ " -Picture -b " + songDir + " > " + coverDir);
+						+ " -Picture -b '" + songDir + "' > " + coverDir);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

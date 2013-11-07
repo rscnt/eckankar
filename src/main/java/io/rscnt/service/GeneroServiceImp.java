@@ -2,8 +2,6 @@ package io.rscnt.service;
 
 import java.util.List;
 
-import javassist.NotFoundException;
-
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
