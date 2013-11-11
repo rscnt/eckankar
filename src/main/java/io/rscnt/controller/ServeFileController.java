@@ -2,10 +2,12 @@ package io.rscnt.controller;
 
 import java.io.File;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,30 +21,63 @@ public class ServeFileController {
 		// TODO Auto-generated constructor stub
 	}
 
-	@RequestMapping(produces = MediaType.IMAGE_JPEG_VALUE, value = "/covers/{cover_name}", method = RequestMethod.GET)
+	@RequestMapping(value = "/covers/{cover_name}", method = RequestMethod.GET)
 	@ResponseBody
-	public FileSystemResource getCover(
-			@PathVariable("cover_name") String fileName,
-			HttpServletResponse response) {
-		response.setHeader("Content-Type", "image/jpg");
+	public HttpEntity<FileSystemResource> getCover(
+			@PathVariable("cover_name") String fileName) {
+
 		String baseDir = System.getenv("RSCNT_DATA_MEDIA") != null ? System
 				.getenv("RSCNT_DATA_MEDIA") + "covers/"
 				: "/home/_r/media/covers/";
+
 		File f = new File(baseDir + fileName + ".jpg");
+
 		if (f.exists() && f.length() != 0) {
-			return new FileSystemResource(baseDir + fileName + ".jpg");
+
+			HttpHeaders httpHeaders = new HttpHeaders();
+
+			httpHeaders.setContentType(MediaType.IMAGE_JPEG);
+
+			FileSystemResource fsr = new FileSystemResource(baseDir + fileName
+					+ ".jpg");
+
+			return new ResponseEntity<FileSystemResource>(fsr, httpHeaders,
+					HttpStatus.OK);
+
 		} else {
-			return new FileSystemResource(baseDir + "default.jpg");
+
+			HttpHeaders httpHeaders = new HttpHeaders();
+
+			httpHeaders.setContentType(MediaType.IMAGE_JPEG);
+
+			FileSystemResource fsr = new FileSystemResource(baseDir
+					+ "default.jpg");
+
+			return new ResponseEntity<FileSystemResource>(fsr, httpHeaders,
+					HttpStatus.OK);
+
 		}
 
 	}
 
 	@RequestMapping(value = "/songs/{song_name}", method = RequestMethod.GET)
 	@ResponseBody
-	public FileSystemResource getSong(@PathVariable("song_name") String fileName) {
+	public HttpEntity<FileSystemResource> getSong(
+			@PathVariable("song_name") String fileName) {
+
 		String baseDir = System.getenv("RSCNT_DATA_MEDIA") != null ? System
 				.getenv("RSCNT_DATA_MEDIA") + "songs/"
 				: "/home/_r/media/songs/";
-		return new FileSystemResource(baseDir + fileName + ".mp3");
+
+		FileSystemResource fsr = new FileSystemResource(baseDir + fileName
+				+ ".mp3");
+
+		HttpHeaders httpHeaders = new HttpHeaders();
+
+		httpHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+
+		return new ResponseEntity<FileSystemResource>(fsr, httpHeaders,
+				HttpStatus.OK);
+
 	}
 }

@@ -1,5 +1,14 @@
 package io.rscnt.model;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 /**
  * 
  * @author rscnt <rscnt.github.io>
@@ -7,17 +16,28 @@ package io.rscnt.model;
  * @time 20:00
  *
  */
+@Entity
+@Table(name="cancion")
 public class Cancion {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer codigo;
 	private String fName;
 	private String nombre;
 	private Integer track;
 	private Integer duracion;
-	private String imagen_src;
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="artista", referencedColumnName="codigo")
 	private Artista artista;
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="genero", referencedColumnName="codigo")
 	private Genero genero;
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="album", referencedColumnName="codigo")
 	private Album album;
+	
+	public Cancion(){}
 	
 	/**
 	 * @param codigo
@@ -30,8 +50,7 @@ public class Cancion {
 	 * @param imagen_src
 	 */
 	public Cancion(Integer codigo, String fName, String nombre, Integer track,
-			Integer duracion, Artista artista, Genero genero, Album album,
-			String imagen_src) {
+			Integer duracion, Artista artista, Genero genero, Album album) {
 		this.codigo = codigo;
 		this.fName = fName;
 		this.nombre = nombre;
@@ -40,7 +59,6 @@ public class Cancion {
 		this.artista = artista;
 		this.genero = genero;
 		this.album = album;
-		this.imagen_src = imagen_src;
 	}
 
 	/**
@@ -76,13 +94,6 @@ public class Cancion {
 	 */
 	public Genero getGenero() {
 		return genero;
-	}
-
-	/**
-	 * @return the imagen_src
-	 */
-	public String getImagen_src() {
-		return imagen_src;
 	}
 
 	/**
@@ -135,13 +146,6 @@ public class Cancion {
 	}
 
 	/**
-	 * @param imagen_src the imagen_src to set
-	 */
-	public void setImagen_src(String imagen_src) {
-		this.imagen_src = imagen_src;
-	}
-
-	/**
 	 * @param nombre the nombre to set
 	 */
 	public void setNombre(String nombre) {
@@ -172,9 +176,6 @@ public class Cancion {
 			builder.append("\"duracion\" : ").append(getDuracion()).append(", ");
 		if (getGenero() != null)
 			builder.append("\"genero\" : ").append(getGenero()).append(", ");
-		if (getImagen_src() != null)
-			builder.append("\"imagen_src\" : ").append(getImagen_src())
-					.append(", ");
 		if (getNombre() != null)
 			builder.append("\"nombre\" : ").append(getNombre()).append(", ");
 		if (getTrack() != null)

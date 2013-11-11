@@ -59,4 +59,14 @@ public class GeneroServiceImp implements GeneroService {
 		return generoObtenido;
 	}
 
+	@Override
+	public Genero findByNombre(String nombre) {
+		Genero generoObtenido = generoRepo.findByNombre(nombre);
+		if (generoObtenido == null) {
+			return null;
+		} else {
+			return generoObtenido;
+		}
+	}
+
 }

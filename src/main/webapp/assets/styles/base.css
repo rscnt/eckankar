@@ -47,7 +47,7 @@ body {
 }
 
 #main-container {
-	margin-bottom: 200px; 
+	margin-bottom: 200px;
 }
 
 .album-cover {
@@ -92,4 +92,29 @@ body {
 
 #uploadForm-container {
 	margin: 20px auto;
+}
+
+.artist-view {
+	text-align: center;
+	background: white;
+	height: 580px;
+	overflow: hidden;
+}
+
+.artist-view .artist-descp,
+.artist-view .artist-title,
+.artist-view .artist-genres {
+	padding: 10px 15px 10px 15px;
+}
+
+.artist-view .artist-cover {
+	height: 300px;
+	width: 100%;
+	margin: 0px;
+	box-shadow: 0 0 5px #141414;
+}
+
+
+.artist-view .artist-descp {
+	text-align: left;
 }

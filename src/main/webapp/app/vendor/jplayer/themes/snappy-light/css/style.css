@@ -538,7 +538,7 @@ ul {
 
 .song-playlist {
 	display: block;
-	width: 320px;
+	width: 300px;
 	height: 110px;
 	margin: 10px 2px;
 	padding: 10px;
@@ -573,7 +573,7 @@ ul {
 }
 
 .song-playlist-info {
-	width: 200px;
+	width: 180px;
 	float: left;
 	padding: 20px 0px;
 	font-size: 10px;

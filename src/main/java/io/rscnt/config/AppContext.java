@@ -3,7 +3,6 @@ package io.rscnt.config;
 import java.util.Properties;
 
 import javax.servlet.MultipartConfigElement;
-import javax.activation.DataSource;
 import javax.annotation.Resource;
 
 import org.hibernate.ejb.HibernatePersistence;
@@ -55,10 +54,10 @@ public class AppContext extends WebMvcConfigurerAdapter {
 	}
 
 	// DATA {{
-	private static final String PROPERTY_NAME_DATABASE_DRIVER = "db.driver";
-	private static final String PROPERTY_NAME_DATABASE_PASSWORD = "db.password";
-	private static final String PROPERTY_NAME_DATABASE_URL = "db.url";
-	private static final String PROPERTY_NAME_DATABASE_USERNAME = "db.username";
+//	private static final String PROPERTY_NAME_DATABASE_DRIVER = "db.driver";
+//	private static final String PROPERTY_NAME_DATABASE_PASSWORD = "db.password";
+//	private static final String PROPERTY_NAME_DATABASE_URL = "db.url";
+//	private static final String PROPERTY_NAME_DATABASE_USERNAME = "db.username";
 
 	private static final String PROPERTY_NAME_HIBERNATE_DIALECT = "hibernate.dialect";
 	private static final String PROPERTY_NAME_HIBERNATE_SHOW_SQL = "hibernate.show_sql";
@@ -68,24 +67,20 @@ public class AppContext extends WebMvcConfigurerAdapter {
 	private Environment env;
 
 	@Bean
-	public DataSource dataSource() {
+	public DriverManagerDataSource dataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
-
-		dataSource.setDriverClassName(env
-				.getRequiredProperty(PROPERTY_NAME_DATABASE_DRIVER));
-		dataSource.setUrl(env.getRequiredProperty(PROPERTY_NAME_DATABASE_URL));
-		dataSource.setUsername(env
-				.getRequiredProperty(PROPERTY_NAME_DATABASE_USERNAME));
-		dataSource.setPassword(env
-				.getRequiredProperty(PROPERTY_NAME_DATABASE_PASSWORD));
-
-		return (DataSource) dataSource;
+		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+		dataSource.setUrl("jdbc:mysql://localhost:3306/disquera");
+		dataSource.setUsername("_r");
+		dataSource.setPassword("foo45");
+		return dataSource;
 	}
 
 	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 		LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
-		entityManagerFactoryBean.setDataSource((javax.sql.DataSource) dataSource());
+		entityManagerFactoryBean
+				.setDataSource((javax.sql.DataSource) dataSource());
 		entityManagerFactoryBean
 				.setPersistenceProviderClass(HibernatePersistence.class);
 		entityManagerFactoryBean

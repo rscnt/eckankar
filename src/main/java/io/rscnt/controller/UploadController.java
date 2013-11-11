@@ -7,6 +7,9 @@ import io.rscnt.model.Genero;
 import io.rscnt.utils.ExifSongInfo;
 import io.rscnt.utils.ExifToolWrapper;
 import io.rscnt.utils.Utils;
+import io.rscnt.service.AlbumService;
+import io.rscnt.service.ArtistaService;
+import io.rscnt.service.CancionService;
 import io.rscnt.service.GeneroService;
 
 import java.io.BufferedOutputStream;
@@ -24,14 +27,25 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class UploadController {
-	
+
 	@Autowired
 	private GeneroService generoService;
-	
-//	@RequestMapping(value = "upload", method = RequestMethod.GET)
-//	public String upload() {
-//		return "upload";
-//	}
+	@Autowired
+	private ArtistaService artistaService;
+	@Autowired
+	private AlbumService albumService;
+	@Autowired
+	private CancionService cancionService;
+
+	private Genero genero;
+	private Artista artista;
+	private Album album;
+	private Cancion cancion;
+
+	 @RequestMapping(value = "/upload", method = RequestMethod.GET)
+	 public String upload() {
+	 return "base";
+	 }
 
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public @ResponseBody
@@ -62,18 +76,42 @@ public class UploadController {
 							.getAbsolutePath());
 
 					// ------------
-					Artista artista = new Artista(null,
-							exifSongInfo.getArtist(), null, null);
-					Genero genero = new Genero(null, exifSongInfo.getGenre(),
-							"A genre this is a genery", "imageTODO.png");
-					
-					generoService.create(genero);
-					
-					Album album = new Album(null, exifSongInfo.getAlbum(),
-							exifSongInfo.getPicture(), null, genero, artista);
-					Cancion cancion = new Cancion(null, audio.getName(),
-							exifSongInfo.getTitle(), null, null, artista,
-							genero, album, null);
+
+					genero = generoService
+							.findByNombre(exifSongInfo.getGenre());
+
+					if (genero == null) {
+						genero = new Genero(null, exifSongInfo.getGenre(), "",
+								"");
+						generoService.create(genero);
+					}
+
+					artista = artistaService.findByNombre(exifSongInfo
+							.getArtist());
+
+					if (artista == null) {
+						artista = new Artista(null, exifSongInfo.getArtist(),
+								"", "");
+						artistaService.create(artista);
+					}
+
+					album = albumService.findByNombre(exifSongInfo.getAlbum());
+
+					if (album == null) {
+						album = new Album(null, exifSongInfo.getAlbum(),
+								exifSongInfo.getPicture(), 0.0, genero, artista);
+						albumService.create(album);
+					}
+
+					cancion = cancionService.findByNombre(exifSongInfo
+							.getTitle());
+					if (cancion == null) {
+						cancion = new Cancion(null, exifSongInfo.getFileName(),
+								exifSongInfo.getTitle(), 0, 0, artista, genero,
+								album);
+
+						cancionService.create(cancion);
+					}
 					// ---------------
 
 					return cancion;

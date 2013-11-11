@@ -5,8 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "`Genero`")
 public class Genero {
 
 	@Id
@@ -18,6 +20,9 @@ public class Genero {
 	private String descripcion;
 	@Column(name = "imagen_src")
 	private String imagen_src;
+
+	public Genero() {
+	}
 
 	/**
 	 * @param codigo

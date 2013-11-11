@@ -3,14 +3,14 @@
 /* global $ */
 /* global Messenger */
 
-base.playlist = {
+eckankar.playlist = {
 	init : function() {
 		$("#jplayer").jPlayer({
 			swfPath : "/app/vendor/jplayer",
 			supplied : "mp3"
 		});
 		$("#jplayer").jPlayer("volume", 0.50);
-		base.playlist.bindEvents();
+		this.bindEvents();
 	},
 	status : {
 		loop : false,
@@ -26,97 +26,144 @@ base.playlist = {
 		fname : null
 	},
 	addtoPlaylist : function(cancion) {
+
+		var eckpl = this; // that = this, me = this.
+
 		songEL = $(_.template(Templates.playlistSong, {
 			cancion : cancion,
 			album : cancion.album.nombre.replace(/\s+/g, ''),
-			id : this.stackPlaylist.length
+			id : eckpl.stackPlaylist.length
 		})).appendTo("#playlist");
+
 		this.stackPlaylist.push({
 			el : songEL,
 			cancion : cancion,
-			id : this.stackPlaylist.length
+			id : eckpl.stackPlaylist.length
 		});
 
-		$(songEL)
-				.click(
-						function() {
-							$(".song-playlist").removeClass(
-									"song-playlist-active");
-							$(this).addClass("song-playlist-active");
-							base.playlist.currentPlaylist = base.playlist.stackPlaylist[$(
-									this).attr('data-id')];
-							base.playlist.playCurrent();
-						});
+		$(songEL).click(
+				function() {
+					$(".song-playlist").removeClass("song-playlist-active");
+					$(this).addClass("song-playlist-active");
+					eckpl.currentPlaylist = eckpl.stackPlaylist[$(this).attr(
+							'data-id')];
+					eckpl.playCurrent();
+				});
 	},
+
 	playSong : function(fName) {
+
+		var eckpl = this; // that = this, me = this.
+
 		$("#jplayer").jPlayer("clearMedia");
 		$("#jplayer").jPlayer("setMedia", {
 			mp3 : "/songs/" + fName
 		});
 		$("#jplayer").jPlayer("play");
+
 	},
+
 	playCurrent : function() {
+
 		$("#jplayer").jPlayer("clearMedia");
+
 		if (document.querySelector(".song-playlist-active") === null) {
-			base.playlist.currentPlaylist = base.playlist.stackPlaylist[0];
+			this.currentPlaylist = this.stackPlaylist[0];
 		}
 		$(".song-playlist").removeClass("song-playlist-active");
-		$(base.playlist.currentPlaylist.el).addClass("song-playlist-active");
+		$(this.currentPlaylist.el).addClass("song-playlist-active");
 
-		base.playlist.showCurrentSong();
-		base.playlist.playSong(base.playlist.currentPlaylist.cancion.fName);
+		this.showCurrentSong();
+
+		this.playSong(this.currentPlaylist.cancion.fName);
+
 	},
+
 	playNext : function() {
-		if (base.playlist.currentPlaylist.id === (base.playlist.stackPlaylist.length - 1)) {
-			base.playlist.currentPlaylist = base.playlist.stackPlaylist[0];
+
+		if (this.currentPlaylist.id === (this.stackPlaylist.length - 1)) {
+			this.currentPlaylist = this.stackPlaylist[0];
 		} else {
-			base.playlist.currentPlaylist = base.playlist.stackPlaylist[base.playlist.currentPlaylist.id + 1];
+			this.currentPlaylist = this.stackPlaylist[base.playlist.currentPlaylist.id + 1];
 		}
-		base.playlist.playCurrent();
+
+		this.playCurrent();
 		return true;
 	},
+
 	playPrevious : function() {
-		if (base.playlist.currentPlaylist.id === 0) {
-			base.playlist.currentPlaylist = base.playlist.stackPlaylist[base.playlist.stackPlaylist.length - 1];
+
+		if (this.currentPlaylist.id === 0) {
+			this.currentPlaylist = this.stackPlaylist[this.stackPlaylist.length - 1];
 		} else {
-			base.playlist.currentPlaylist = base.playlist.stackPlaylist[base.playlist.currentPlaylist.id - 1];
+			this.currentPlaylist = this.stackPlaylist[this.currentPlaylist.id - 1];
 		}
-		base.playlist.playCurrent();
+
+		this.playCurrent();
 		return true;
 	},
+
 	playRandom : function() {
-		var s = Math.floor(Math.random()
-				* (base.playlist.stackPlaylist.length - 0 + 1) + 0);
-		console.log('S : ' + s);
-		base.playlist.currentPlaylist = base.playlist.stackPlaylist[s];
-		base.playlist.playCurrent();
+
+		var s = Math.floor(Math.random() * (this.stackPlaylist.length - 0 + 1)
+				+ 0);
+
+		this.currentPlaylist = this.stackPlaylist[s];
+
+		this.playCurrent();
 		return true;
 	},
+
 	showCurrentSong : function() {
+
+		var eckpl = this; // that = this, me = this.
+
 		Messenger()
 				.post(
 						{
-							message : "<i class=\"icon-note\"></i>"
-									+ base.playlist.currentPlaylist.cancion.nombre
+							message : "<div class=\"row\">"
+									+ "<div class=\"three columns\"><img class=\"lft\" src=\"/covers/"
+									+ eckpl.currentPlaylist.cancion.album.nombre
+											.replace(/\s+/g, '')
+									+ "\" /></div>"
+									+ "<div class=\"nine columns\">"
+									+ "<i class=\"icon-note\"></i>"
+									+ eckpl.currentPlaylist.cancion.nombre
 									+ "<br/><i class=\"icon-mic\"></i>"
-									+ base.playlist.currentPlaylist.cancion.artista.nombre
+									+ eckpl.currentPlaylist.cancion.artista.nombre
 									+ "<br/><i class=\"icon-music\"></i>"
-									+ base.playlist.currentPlaylist.cancion.album.nombre,
+									+ eckpl.currentPlaylist.cancion.album.nombre
+									+ "</div>",
 							type : 'info',
 							showCloseButton : true
 						});
 
 	},
+
 	bindEvents : function() {
+
+		var eckpl = this; // that = this, me = this.
+
 		$(".jp-next").click(function(e) {
-			base.playlist.playNext();
+			if (eckpl.status.random) {
+				eckpl.playRandom();
+			} else {
+				eckpl.playNext();
+			}
 			e.preventDefault();
 			return false;
 		});
 		$(".jp-previous").click(function(e) {
-			base.playlist.playPrevious();
+
+			if (eckpl.status.random) {
+				eckpl.playRandom();
+			} else {
+				eckpl.playPrevious();
+			}
+
 			e.preventDefault();
 			return false;
+
 		});
 
 		$(".jp-show-plst").click(function(e) {
@@ -139,24 +186,24 @@ base.playlist = {
 
 		$(".jp-info").click(function(e) {
 			e.preventDefault();
-			base.playlist.showCurrentSong();
+			eckpl.showCurrentSong();
 		});
 
 		$(".jp-loop").click(
 				function(e) {
-					if (base.playlist.status.loop) {
+					if (eckpl.status.loop) {
 						$("#jplayer").unbind(".repeat");
-						base.playlist.status.loop = false;
+						eckpl.status.loop = false;
 						$(".jp-loop").removeClass('active');
 					} else {
 						$(".jp-loop").addClass('active');
-						base.playlist.status.loop = true;
+						eckpl.status.loop = true;
 						$("#jplayer").bind($.jPlayer.event.ended + ".repeat",
 								function() {
-									if (base.playlist.random) {
-										base.playlist.playRandom();
+									if (eckpl.status.random) {
+										eckpl.playRandom();
 									} else {
-										base.playlist.playNext();
+										eckpl.playNext();
 									}
 								});
 					}
@@ -165,16 +212,16 @@ base.playlist = {
 
 		$(".jp-random").click(
 				function(e) {
-					if (base.playlist.status.random) {
+					if (eckpl.status.random) {
 						$("#jplayer").unbind(".random");
-						base.playlist.status.random = false;
+						eckpl.status.random = false;
 						$(".jp-random").removeClass('active');
 					} else {
 						$(".jp-random").addClass('active');
-						base.playlist.status.random = true;
+						eckpl.status.random = true;
 						$("#jplayer").bind($.jPlayer.event.ended + ".random",
 								function() {
-									base.playlist.playRandom();
+									eckpl.playRandom();
 								});
 					}
 					e.preventDefault();

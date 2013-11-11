@@ -1,13 +1,33 @@
 package io.rscnt.model;
 
-public class Album {
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table(name="album")
+public class Album {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer codigo;
 	private String nombre;
 	private String imagen_src;
 	private Double precio;
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="genero", referencedColumnName="codigo")
 	private Genero genero;
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="artista", referencedColumnName="codigo")
 	private Artista artista;
+	
+	public Album(){}
+	
 	/**
 	 * @param codigo
 	 * @param nombre

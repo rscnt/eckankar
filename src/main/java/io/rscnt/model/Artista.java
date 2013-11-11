@@ -1,11 +1,23 @@
 package io.rscnt.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="artista")
 public class Artista {
-	
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer codigo;
 	private String nombre;
 	private String descripcion;
 	private String imagen_src;
+	
+	public Artista(){}
 	
 	/**
 	 * @param codigo
