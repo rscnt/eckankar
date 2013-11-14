@@ -1,0 +1,89 @@
+<div class="twelve columns">
+	<div class="row">
+		<div class="l-centered twelve columns">
+			<div class="medium btn default" style="width: 100%">
+				<a data-id="<%= artista.codigo %>" href="#"
+					class="icon-left icon-left-open-mini" id="back-artista"> <i
+					class="icon icon-left-open"> volver</i>
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="row" id="uploadForm-container">
+
+			<form id="uploadForm" action="/artistas" method="PUT">
+
+				<div class="twelve columns">
+					<div id="uploadBanner" class="medium primary btn"
+						style="width: 100%;">
+						<a> <i class="icon-doc-landscape"></i>
+						</a>
+					</div>
+				</div>
+
+				<input style="overflow: hidden; height: 0px; width: 0px;"
+					id="bannerchooser" type="file" name="file" multiple="multiple" />
+
+				<fieldset>
+					<legend>Editar Artista</legend>
+					<ul class="l-centered">
+						<li class="prepend field"><span class="adjoined"><i
+								class="icon icon-mic"></i> </span> <input type="text"
+							placeholder="Nombre del Artista" id="nombre-artista"
+							class="xwide text input" value="<%= artista.nombre %>"></li>
+					</ul>
+					<br />
+					<div class="twelve columns" style="margin-bottom: 20px;">
+						<div class="eight columns">
+							<div id="artista-edit-descp"></div>
+						</div>
+						<div class="three columns">
+							<div id="uploadImagenSrc" class="medium primary btn"
+								style="width: 100%;">
+								<a> <i class="icon-picture"></i>
+								</a>
+							</div>
+							<input style="overflow: hidden; height: 0px; width: 0px;"
+								id="imgSrcChooser" type="file" name="file" multiple="multiple" />
+							<div class="image">
+								<img class="artist-cover" src="<%= artista.imagen_src %>"
+									id="artist-image-src" />
+							</div>
+						</div>
+					</div>
+
+					<div id="submitEditArtista" class="medium secondary btn"
+						style="width: 100%;">
+						<a> Aceptar <i class="icon-pencil"></i>
+						</a>
+					</div>
+				</fieldset>
+
+
+			</form>
+
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	var urlBanner = "/banners/<%= artista.imagen_src %>";
+
+	$("#artista-edit-descp").redactor();
+	if ("<%= artista.descripcion %>" === "") {
+		$("#artista-edit-descp").html('Descripcion del artista...');
+	} else {
+		$("#artista-edit-descp").html('<%= artista.descripcion%>');
+	}
+
+	$("#nombre-artista").text('<%= artista.nombre %>');
+
+	if ("<%= artista.nombre %>" === "") {
+		eckankar.banner
+				.set_img_banner($("#banner-top"), "/banners/default.jpg");
+	} else {
+		eckankar.banner.set_img_banner($("#banner-top"),
+				"/banners/<%= artista.nombre %>.jpg");
+	}
+</script>

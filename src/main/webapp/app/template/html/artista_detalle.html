@@ -1,0 +1,55 @@
+<div class="twelve columns">
+	<div class="row">
+		<div class="l-centered twelve columns">
+			<div
+				class="medium btn pill-left default icon-left icon-left-open-mini">
+				<a href="#" id="back-artistas">volver</a>
+			</div>
+			<div class="medium squared btn default icon-left icon-music">
+				<a href="#" data-id="<%= artista.codigo %>" data-view="albums">Albumes</a>
+			</div>
+			<div class="medium squared btn default icon-left icon-bookmarks">
+				<a href="#" data-id="<%= artista.codigo %>" data-view="genres">Generos</a>
+			</div>
+			<div class="medium squared btn default icon-left icon-note-beamed">
+				<a href="#" data-id="<%= artista.codigo %>" data-view="songs">Canciones</a>
+			</div>
+			<div id="artists-artist"
+				class="medium squared btn default icon-left icon-mic">
+				<a href="#" data-id="<%= artista.codigo %>" data-view="artists">Artistas
+					Similares</a>
+			</div>
+			<div id="edit-artista"
+				class="medium btn pill-right default icon-right icon-right-open-mini">
+				<a href="#" data-id="<%= artista.codigo %>" id="to-edit">Editar<i
+					class="icon icon-pencil"></i></a>
+			</div>
+		</div>
+	</div>
+	<div id="artist-content">
+		<div class="row">
+			<div class="twelve columns" id="artist-title-container">
+				<br />
+				<h1 class="l-centered" id="artist-title"><%= artista.nombre %>
+				</h1>
+				<hr />
+			</div>
+		</div>
+		<div class="row">
+			<div class="nine columns" id="artist-descp-container">
+				<p id="artist-descp"><%= artista.descripcion %></p>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		if ("<%= artista.nombre %>" === "") {
+			eckankar.banner.set_img_banner($("#banner-top"),
+					"/banners/default.jpg");
+		} else {
+			eckankar.banner.set_img_banner($("#banner-top"),
+					"/banners/<%= artista.nombre %>.jpg");
+		}
+	</script>
+
+</div>
