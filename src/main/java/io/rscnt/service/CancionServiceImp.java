@@ -26,7 +26,7 @@ public class CancionServiceImp implements CancionService {
 	@Override
 	@Transactional
 	public Cancion delete(int codigo) {
-		Cancion viejoCancion = CancionRepo.findOne((long) codigo);
+		Cancion viejoCancion = CancionRepo.findOne(codigo);
 		if (viejoCancion == null) {
 			return null; // TODO: MANAGE THIS
 		}
@@ -43,7 +43,7 @@ public class CancionServiceImp implements CancionService {
 	@Override
 	@Transactional
 	public Cancion update(Cancion Cancion) {
-		Cancion CancionActualizado = CancionRepo.findOne((long) Cancion
+		Cancion CancionActualizado = CancionRepo.findOne(Cancion
 				.getCodigo());
 		if (CancionActualizado == null) {
 			return null; // TODO: MANAGE THIS
@@ -53,7 +53,7 @@ public class CancionServiceImp implements CancionService {
 
 	@Override
 	public Cancion findById(int codigo) {
-		Cancion CancionObtenido = CancionRepo.findOne((long) codigo);
+		Cancion CancionObtenido = CancionRepo.findOne(codigo);
 		if (CancionObtenido == null) {
 			return null; // TODO: MANAGE THIS
 		}

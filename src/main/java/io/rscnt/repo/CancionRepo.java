@@ -6,7 +6,7 @@ import org.springframework.data.repository.query.Param;
 
 import io.rscnt.model.Cancion;
 
-public interface CancionRepo extends JpaRepository<Cancion, Long> {
+public interface CancionRepo extends JpaRepository<Cancion, Integer> {
 	@Query("select c from Cancion c where LOWER(c.nombre) = LOWER(:cancionNombre)")
 	public Cancion findByNombre(@Param("cancionNombre") String cancionNombre);
 }

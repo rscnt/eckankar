@@ -107,7 +107,5 @@ public class Artista {
 		builder.append("}");
 		return builder.toString();
 	}
-	
-	
 
 }

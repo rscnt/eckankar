@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -33,19 +33,19 @@ public class GeneroController {
 
 	@RequestMapping(method = RequestMethod.GET, value = "/{codigo}")
 	@ResponseBody
-	public Genero getGeneroByCodigo(@RequestParam("codigo") long codigo) {
-		return generoService.findById((int) codigo);
+	public Genero getGeneroByCodigo(@PathVariable int codigo) {
+		return generoService.findById(codigo);
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/nombre/{nombre}")
 	@ResponseBody
-	public Genero getGeneroByNombre(@RequestParam("nombre") String nombre) {
+	public Genero getGeneroByNombre(@PathVariable String nombre) {
 		return generoService.findByNombre(nombre);
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, value = "/{codigo}")
 	@ResponseBody
-	public Genero deleteGenero(@RequestParam("codigo") int codigo) {
+	public Genero deleteGenero(@PathVariable int codigo) {
 		return generoService.delete(codigo);
 	}
 

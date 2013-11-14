@@ -26,7 +26,7 @@ public class GeneroServiceImp implements GeneroService {
 	@Override
 	@Transactional
 	public Genero delete(int codigo) {
-		Genero viejoGenero = generoRepo.findOne((long) codigo);
+		Genero viejoGenero = generoRepo.findOne(codigo);
 		if (viejoGenero == null) {
 			return null; // TODO: MANAGE THIS
 		}
@@ -52,7 +52,7 @@ public class GeneroServiceImp implements GeneroService {
 
 	@Override
 	public Genero findById(int codigo) {
-		Genero generoObtenido = generoRepo.findOne((long) codigo);
+		Genero generoObtenido = generoRepo.findOne(codigo);
 		if (generoObtenido == null) {
 			return null; // TODO: MANAGE THIS
 		}

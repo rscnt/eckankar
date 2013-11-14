@@ -13,7 +13,7 @@ public class Genero {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long codigo;
+	private Integer codigo;
 	@Column(name = "nombre")
 	private String nombre;
 	@Column(name = "descripcion")
@@ -30,7 +30,7 @@ public class Genero {
 	 * @param descripcion
 	 * @param imagen_src
 	 */
-	public Genero(Long codigo, String nombre, String descripcion,
+	public Genero(Integer codigo, String nombre, String descripcion,
 			String imagen_src) {
 		this.codigo = codigo;
 		this.nombre = nombre;
@@ -41,7 +41,7 @@ public class Genero {
 	/**
 	 * @return the codigo
 	 */
-	public Long getCodigo() {
+	public Integer getCodigo() {
 		return codigo;
 	}
 
@@ -49,7 +49,7 @@ public class Genero {
 	 * @param codigo
 	 *            the codigo to set
 	 */
-	public void setCodigo(Long codigo) {
+	public void setCodigo(Integer codigo) {
 		this.codigo = codigo;
 	}
 

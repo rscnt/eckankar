@@ -26,7 +26,7 @@ public class ArtistaServiceImp implements ArtistaService {
 	@Override
 	@Transactional
 	public Artista delete(int codigo) {
-		Artista viejoArtista = ArtistaRepo.findOne((long) codigo);
+		Artista viejoArtista = ArtistaRepo.findOne(codigo);
 		if (viejoArtista == null) {
 			return null; // TODO: MANAGE THIS
 		}
@@ -43,8 +43,7 @@ public class ArtistaServiceImp implements ArtistaService {
 	@Override
 	@Transactional
 	public Artista update(Artista Artista) {
-		Artista ArtistaActualizado = ArtistaRepo.findOne((long) Artista
-				.getCodigo());
+		Artista ArtistaActualizado = ArtistaRepo.findOne(Artista.getCodigo());
 		if (ArtistaActualizado == null) {
 			return null; // TODO: MANAGE THIS
 		}
@@ -53,7 +52,7 @@ public class ArtistaServiceImp implements ArtistaService {
 
 	@Override
 	public Artista findById(int codigo) {
-		Artista ArtistaObtenido = ArtistaRepo.findOne((long) codigo);
+		Artista ArtistaObtenido = ArtistaRepo.findOne(codigo);
 		if (ArtistaObtenido == null) {
 			return null; // TODO: MANAGE THIS
 		}

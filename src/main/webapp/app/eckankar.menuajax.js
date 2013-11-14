@@ -20,7 +20,7 @@ eckankar.menuajax = {
 						if (place === "upload") {
 							eckankar.upload.uploader();
 						} else if (place === "artistas") {
-							eckankar.app.artistas.init();
+							eckankar.artistas.init();
 						}
 
 					});

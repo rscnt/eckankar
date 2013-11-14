@@ -26,7 +26,7 @@ public class AlbumServiceImp implements AlbumService {
 	@Override
 	@Transactional
 	public Album delete(int codigo) {
-		Album viejoAlbum = AlbumRepo.findOne((long) codigo);
+		Album viejoAlbum = AlbumRepo.findOne(codigo);
 		if (viejoAlbum == null) {
 			return null; // TODO: MANAGE THIS
 		}
@@ -43,7 +43,7 @@ public class AlbumServiceImp implements AlbumService {
 	@Override
 	@Transactional
 	public Album update(Album Album) {
-		Album AlbumActualizado = AlbumRepo.findOne((long) Album.getCodigo());
+		Album AlbumActualizado = AlbumRepo.findOne(Album.getCodigo());
 		if (AlbumActualizado == null) {
 			return null; // TODO: MANAGE THIS
 		}
@@ -52,7 +52,7 @@ public class AlbumServiceImp implements AlbumService {
 
 	@Override
 	public Album findById(int codigo) {
-		Album AlbumObtenido = AlbumRepo.findOne((long) codigo);
+		Album AlbumObtenido = AlbumRepo.findOne(codigo);
 		if (AlbumObtenido == null) {
 			return null; // TODO: MANAGE THIS
 		}

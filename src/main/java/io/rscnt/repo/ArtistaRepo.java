@@ -6,7 +6,7 @@ import org.springframework.data.repository.query.Param;
 
 import io.rscnt.model.Artista;
 
-public interface ArtistaRepo extends JpaRepository<Artista, Long> {
+public interface ArtistaRepo extends JpaRepository<Artista, Integer> {
 
 	@Query("select a from Artista a where LOWER(a.nombre) = LOWER(:artistaNombre)")
 	public Artista findByNombre(@Param("artistaNombre") String artistaNombre);

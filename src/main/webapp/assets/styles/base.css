@@ -24,6 +24,7 @@ body {
 #banner-top {
 	width: 100%;
 	margin: 10px 0px;
+	height: 396px;
 }
 
 .title {
@@ -97,13 +98,20 @@ body {
 .artist-view {
 	text-align: center;
 	background: white;
-	height: 580px;
+	min-height: 580px;
 	overflow: hidden;
+	border-radius: 2px 2px 2px 2px;
+	box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+	margin: 20px auto;
 }
 
-.artist-view .artist-descp,
-.artist-view .artist-title,
-.artist-view .artist-genres {
+.artist-view:hover {
+	background: #F4F4F4;
+	cursor: pointer;
+}
+
+.artist-view .artist-descp,.artist-view .artist-title,.artist-view .artist-genres
+	{
 	padding: 10px 15px 10px 15px;
 }
 
@@ -114,7 +122,18 @@ body {
 	box-shadow: 0 0 5px #141414;
 }
 
-
 .artist-view .artist-descp {
 	text-align: left;
 }
+
+/* =====================================
+           artista_detalle.html
+   =====================================
+   */
+#artist-descp {
+	text-align: justify;
+}
+/* =====================================
+         /artista_detalle.html
+   =====================================
+   */
