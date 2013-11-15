@@ -36,19 +36,25 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="nine columns" id="artist-descp-container">
-				<p id="artist-descp"><%= artista.descripcion %></p>
+			<div class="twelve columns" id="artist-descp-container">
+				<p id="artist-descp"></p>
 			</div>
 		</div>
 	</div>
 
+	<div style="display: none;" id="descp"><%= artista.descripcion %></div>
+
 	<script type="text/javascript">
-		if ("<%= artista.nombre %>" === "") {
-			eckankar.banner.set_img_banner($("#banner-top"),
-					"/banners/default.jpg");
+		var urlBanner = "/banners/" + "<%= artista.nombre %>".replace(/ /g, '');
+		$("#artist-descp").html($("#descp").text()); // DON'T FUCKING ASK!!!
+
+		console.log(urlBanner);
+		
+		if ("<%= artista.nombre %>".length === 0) {
+			eckankar.banner
+					.set_img_banner($("#banner-top"), "/banners/default");
 		} else {
-			eckankar.banner.set_img_banner($("#banner-top"),
-					"/banners/<%= artista.nombre %>.jpg");
+			eckankar.banner.set_img_banner($("#banner-top"), urlBanner);
 		}
 	</script>
 

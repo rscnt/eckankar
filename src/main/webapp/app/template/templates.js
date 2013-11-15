@@ -62,5 +62,5 @@ Templates.artistView = "<li data-id=\"<%= artista.codigo %>\" id=\"<%= artista.c
 		+ "</div>"
 		+ "<div class=\"row\">"
 		+ "<div class=\"twelve columns\">"
-		+ "<p class=\"artist-descp\"> <%= artista.descripcion %> </p>"
+		+ "<p class=\"artist-descp\">  <%= artista.descripcion %> </p>"
 		+ "</div>" + "</div>" + "</li>";

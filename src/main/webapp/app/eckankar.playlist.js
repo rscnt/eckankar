@@ -126,7 +126,7 @@ eckankar.playlist = {
 									+ eckpl.currentPlaylist.cancion.album.nombre
 											.replace(/\s+/g, '')
 									+ "\" /></div>"
-									+ "<div class=\"nine columns\">"
+									+ "<div class=\"eight columns\" style=\"overflow: hidden;\">"
 									+ "<i class=\"icon-note\"></i>"
 									+ eckpl.currentPlaylist.cancion.nombre
 									+ "<br/><i class=\"icon-mic\"></i>"

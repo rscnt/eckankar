@@ -24,7 +24,7 @@ body {
 #banner-top {
 	width: 100%;
 	margin: 10px 0px;
-	height: 396px;
+	max-height: 396px;
 }
 
 .title {
@@ -124,6 +124,10 @@ body {
 
 .artist-view .artist-descp {
 	text-align: left;
+}
+
+.artist-view {
+	max-height: 300px;
 }
 
 /* =====================================
