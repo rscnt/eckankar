@@ -61,8 +61,7 @@ public class AppContext extends WebMvcConfigurerAdapter {
 
 	private static final String PROPERTY_NAME_HIBERNATE_DIALECT = "hibernate.dialect";
 	private static final String PROPERTY_NAME_HIBERNATE_SHOW_SQL = "hibernate.show_sql";
-	private static final String PROPERTY_NAME_ENTITYMANAGER_PACKAGES_TO_SCAN = "entitymanager.packages.to.scan";
-
+	
 	@Resource
 	private Environment env;
 
@@ -70,12 +69,19 @@ public class AppContext extends WebMvcConfigurerAdapter {
 	public DriverManagerDataSource dataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-		dataSource.setUrl("jdbc:mysql://localhost:3306/disquera");
+		dataSource.setUrl("jdbc:mysql://127.0.0.1:3306/disquera");
 		dataSource.setUsername("_r");
 		dataSource.setPassword("foo45");
 		return dataSource;
 	}
 
+	private Properties hibProperties() {
+		Properties properties = new Properties();
+		properties.put(PROPERTY_NAME_HIBERNATE_DIALECT, "org.hibernate.dialect.MySQL5Dialect");
+		properties.put(PROPERTY_NAME_HIBERNATE_SHOW_SQL, "false");
+		return properties;
+	}
+	
 	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 		LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
@@ -84,21 +90,11 @@ public class AppContext extends WebMvcConfigurerAdapter {
 		entityManagerFactoryBean
 				.setPersistenceProviderClass(HibernatePersistence.class);
 		entityManagerFactoryBean
-				.setPackagesToScan(env
-						.getRequiredProperty(PROPERTY_NAME_ENTITYMANAGER_PACKAGES_TO_SCAN));
+				.setPackagesToScan("io.rscnt.model");
 
 		entityManagerFactoryBean.setJpaProperties(hibProperties());
 
 		return entityManagerFactoryBean;
-	}
-
-	private Properties hibProperties() {
-		Properties properties = new Properties();
-		properties.put(PROPERTY_NAME_HIBERNATE_DIALECT,
-				env.getRequiredProperty(PROPERTY_NAME_HIBERNATE_DIALECT));
-		properties.put(PROPERTY_NAME_HIBERNATE_SHOW_SQL,
-				env.getRequiredProperty(PROPERTY_NAME_HIBERNATE_SHOW_SQL));
-		return properties;
 	}
 
 	@Bean

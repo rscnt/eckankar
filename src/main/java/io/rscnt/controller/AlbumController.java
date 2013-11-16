@@ -100,11 +100,4 @@ public class AlbumController {
 		return albumService.update(album);
 
 	}
-
-	@RequestMapping(method = RequestMethod.GET, value = "/{codigo}/canciones")
-	@ResponseBody
-	public Album getCancionAlbum(@PathVariable int codigo) {
-		return null;
-	}
-
 }
