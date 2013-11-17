@@ -6,17 +6,17 @@
 				<a href="#" id="back-artistas">volver</a>
 			</div>
 			<div class="medium squared btn default icon-left icon-music">
-				<a href="#" data-id="<%= artista.codigo %>" data-view="albums">Albumes</a>
+				<a href="#" data-id="<%= artista.codigo %>" id="data-view-albums">Albumes</a>
 			</div>
 			<div class="medium squared btn default icon-left icon-bookmarks">
-				<a href="#" data-id="<%= artista.codigo %>" data-view="genres">Generos</a>
+				<a href="#" data-id="<%= artista.codigo %>" id="data-view-genres">Generos</a>
 			</div>
 			<div class="medium squared btn default icon-left icon-note-beamed">
-				<a href="#" data-id="<%= artista.codigo %>" data-view="songs">Canciones</a>
+				<a href="#" data-id="<%= artista.codigo %>" id="data-view-songs">Canciones</a>
 			</div>
 			<div id="artists-artist"
 				class="medium squared btn default icon-left icon-mic">
-				<a href="#" data-id="<%= artista.codigo %>" data-view="artists">Artistas
+				<a href="#" data-id="<%= artista.codigo %>" id="data-view-artists">Artistas
 					Similares</a>
 			</div>
 			<div id="edit-artista"
@@ -30,8 +30,9 @@
 		<div class="row">
 			<div class="twelve columns" id="artist-title-container">
 				<br />
-				<h1 class="l-centered" id="artist-title"><%= artista.nombre %>
-				</h1>
+				<h2 class="l-centered" id="artist-title">
+				<%= artista.nombre %>
+				</h2>
 				<hr />
 			</div>
 		</div>
@@ -49,7 +50,7 @@
 		$("#artist-descp").html($("#descp").text()); // DON'T FUCKING ASK!!!
 
 		console.log(urlBanner);
-		
+
 		if ("<%= artista.nombre %>".length === 0) {
 			eckankar.banner
 					.set_img_banner($("#banner-top"), "/banners/default");

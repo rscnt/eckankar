@@ -64,3 +64,41 @@ Templates.artistView = "<li data-id=\"<%= artista.codigo %>\" id=\"<%= artista.c
 		+ "<div class=\"twelve columns\">"
 		+ "<p class=\"artist-descp\">  <%= artista.descripcion %> </p>"
 		+ "</div>" + "</div>" + "</li>";
+
+Templates.albumView = "<li data-id=\"<%= album.codigo %>\" id=\"<%= album.codigo %>\"  class=\"l-centered album-view\">"
+		+ "<div class=\"row\"> <div class=\"twelve columns\">"
+		+ "<img class=\"album-cover\" src=\"/covers/<%= album.imagen_src %>\"/>"
+		+ "</div>"
+		+ "</div>"
+		+ "<div class=\"row\">"
+		+ "<div class=\"twelve columns\">"
+		+ "<a class=\"addAlbPlaylist secondary l-centered btn\" style=\" margin-bottom: 10px; width:80%;\" data-id=\"<%= album.codigo %>\"><i style=\"color: #f7f7f7;\" class=\"icon-plus\" /></a>"
+		+ "</div>"
+		+ "</div>"
+		+ "<div class=\"row\">"
+		+ "<div class=\"twelve columns\">"
+		+ "<h5 class=\"album-title\"> <%= album.nombre %> </h5>"
+		+ "</div>"
+		+ "</div>"
+		+ "<div class=\"row\">"
+		+ "<div class=\"twelve columns\">"
+		+ "<p class=\"artista-title l-cetenred\">  <%= album.artista.nombre %> </p>"
+		+ "</div>" + "</div>" + "</li>";
+
+Templates.albumSongView = "<tr>"
+		+ "<td> <%= cancion.artista.nombre %> </td>"
+		+ "<td> <%= cancion.nombre %> </td>"
+		+ "<td> <a href=\"#add\" class=\"addPlaylist medium success btn\" data-id=\"<%= cancion.codigo %>\">  <i style=\"color: #f7f7f7;\" class=\"icon icon-plus \" /> </a> </td>"
+		+ "<td> <a href=\"#delete\" class=\"removeSong medium danger btn\" data-id=\"<%= cancion.codigo %>\"> <i style=\"color: #f7f7f7;\"  class=\"icon icon-minus \" /> </a> </td>"
+		+ "</tr>";
+
+// This is bullshit, i'm sorry
+
+Templates.albumContainerView = "<div class=\"row\">"
+		+ "<div class=\"twelve columns\" id=\"album-descp-container\">"
+		+ "<table id=\"album-songs-<%= album.codigo %>\" class=\"striped\">"
+		+ "<thead>"
+		+ "<tr>"
+		+ "<th class=\"l-centered\"><img width=\"20%\" src=\"/covers/<%= album.imagen_src %>\"/></th>"
+		+ "<td colspan=\"3\" class=\"l-centered\" style=\"color: #F7F7F7; padding: 40px;\"><h3 style=\"color: #F7F7F7;\" class=\"l-centered\"><%= album.nombre %></h3></td>"
+		+ "</tr>" + "</thead>" + "</table>" + "</div>" + "</div>";

@@ -1,0 +1,55 @@
+<div class="twelve columns">
+	<div class="row">
+		<div class="l-centered twelve columns">
+			<div
+				class="medium btn pill-left default icon-left icon-left-open-mini">
+				<a href="#" id="back-albums">volver</a>
+			</div>
+			<div class="medium squared btn default icon-left icon-bookmarks">
+				<a href="#" data-id="<%= album.codigo %>" data-view="genres"><%=
+					album.genero.nombre %></a>
+			</div>
+			<div id="artists-artist"
+				class="medium squared btn default icon-left icon-mic">
+				<a href="#" data-id="<%= album.codigo %>" data-view="artists"><%=
+					album.artista.nombre %></a>
+			</div>
+			<div id="edit-album"
+				class="medium btn pill-right default icon-right icon-right-open-mini">
+				<a href="#" data-id="<%= album.codigo %>" id="to-edit">Editar<i
+					class="icon icon-pencil"></i></a>
+			</div>
+		</div>
+	</div>
+	<div id="artist-content">
+		<div class="row">
+			<div class="twelve columns" id="album-title-container">
+				<br />
+				<h2 class="l-centered" id="album-title"><%= album.nombre %></h2>
+				<hr />
+			</div>
+		</div>
+		<div class="row">
+			<div class="twelve columns" id="album-descp-container">
+				<table id="album-songs" class="striped">
+					<thead>
+						<tr>
+							<th class="l-centered"><img width="20%" src="/covers/<%= album.imagen_src %>"/></th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		var urlBanner = "/banners/" + "<%= album.nombre %>".replace(/ /g, '');
+		if ("<%= album.nombre %>".length === 0) {
+			eckankar.banner
+					.set_img_banner($("#banner-top"), "/banners/default");
+		} else {
+			eckankar.banner.set_img_banner($("#banner-top"), urlBanner);
+		}
+	</script>
+
+</div>

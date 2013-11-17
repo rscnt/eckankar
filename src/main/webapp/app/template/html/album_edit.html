@@ -1,0 +1,82 @@
+<div class="twelve columns">
+	<div class="row">
+		<div class="l-centered twelve columns">
+			<div class="medium btn default" style="width: 100%">
+				<a data-id="<%= album.codigo %>" href="#"
+					class="icon-left icon-left-open-mini" id="back-album"> <i
+					class="icon icon-left-open"> volver</i>
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+
+		<div class="row" id="uploadForm-container">
+			<div class="twelve columns">
+				<div id="uploadBanner" class="medium primary btn"
+					style="width: 100%;">
+					<a> <i class="icon-doc-landscape"></i>
+					</a>
+				</div>
+			</div>
+
+			<input style="overflow: hidden; height: 0px; width: 0px;"
+				id="bannerchooser" type="file" name="file" multiple="multiple" />
+
+
+			<form id="uploadForm" action="/albums/u/<%= album.codigo %>"
+				method="POST">
+
+				<fieldset>
+					<legend>Editar Album</legend>
+					<ul class="l-centered">
+						<li class="prepend field"><span class="adjoined"><i
+								class="icon icon-mic"></i> </span> <input type="text"
+							placeholder="Nombre del Artista" id="album-nombre"
+							class="xwide text input" value="<%= album.nombre %>"></li>
+					</ul>
+					<br />
+					<div class="twelve columns" style="margin-bottom: 20px;">
+						<div class="centered three columns">
+							<div id="uploadImagenSrc" class="medium primary btn"
+								style="width: 100%;">
+								<a> <i class="icon-picture"></i>
+								</a>
+							</div>
+							<input style="overflow: hidden; height: 0px; width: 0px;"
+								id="imgSrcChooser" type="file" name="file" multiple="multiple" />
+							<div class="image">
+								<img class="album-cover" src="/covers/<%= album.imagen_src %>"
+									id="album-image-src" />
+							</div>
+						</div>
+					</div>
+					<input type="hidden" id="album-codigo"
+						value="<%= album.codigo %>" /> <input type="hidden"
+						id="album-imgSRC" value="<%= album.imagen_src %>" />
+
+					<div id="submitEditArtista" class="medium secondary btn"
+						style="width: 100%;">
+						<a> Aceptar <i class="icon-pencil"></i>
+						</a>
+					</div>
+				</fieldset>
+
+
+			</form>
+
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	var urlBanner = "/banners/" + "<%= album.nombre %>".replace(/ /g, '');
+
+	if ("<%= album.nombre %>".length == 0) {
+		eckankar.banner
+				.set_img_banner($("#banner-top"), "/banners/default.jpg");
+	} else {
+		$("#album-nombre").text('<%= album.nombre %>');
+		eckankar.banner.set_img_banner($("#banner-top"), urlBanner);
+	}
+</script>

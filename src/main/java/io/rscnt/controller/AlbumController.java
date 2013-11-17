@@ -9,6 +9,7 @@ import io.rscnt.service.AlbumService;
 import io.rscnt.service.CancionService;
 import io.rscnt.utils.Utils;
 import io.rscnt.model.Album;
+import io.rscnt.model.Cancion;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -51,6 +52,12 @@ public class AlbumController {
 		return albumService.findByNombre(nombre);
 	}
 
+	@RequestMapping(method = RequestMethod.GET, value = "/{codigo}/canciones")
+	@ResponseBody
+	public List<Cancion> getAlbumCanciones(@PathVariable int codigo) {
+		return cancionService.findByAlbum(albumService.findById(codigo));
+	}
+
 	@RequestMapping(method = RequestMethod.DELETE, value = "/{codigo}")
 	@ResponseBody
 	public Album deleteAlbum(@PathVariable int codigo) {
@@ -61,22 +68,32 @@ public class AlbumController {
 	@ResponseBody
 	public Album updateAlbum(@PathVariable int codigo,
 			@RequestParam("nombre") String nombre,
-			@RequestParam("precio") Double precio,
-			@RequestParam("imagen_src") String imagen_src,
+			@RequestParam("imagen_src") MultipartFile imagen_src,
 			@RequestParam("file") MultipartFile file) {
 
 		String baseDir = System.getenv("RSCNT_DATA_MEDIA") != null ? System
-				.getenv("RSCNT_DATA_MEDIA") + "banners/"
-				: "/home/_r/media/banners/";
+				.getenv("RSCNT_DATA_MEDIA") : "/home/_r/media/";
 
 		Album album = albumService.findById(codigo);
 
 		album.setCodigo(codigo);
 		album.setNombre(nombre);
-		album.setPrecio(precio);
-		album.setImagen_src(imagen_src);
 
 		try {
+			if (!imagen_src.isEmpty()) {
+				if (file.getContentType().startsWith("image")) {
+					@SuppressWarnings("unused")
+					File imgSrc;
+
+					byte[] bytes = imagen_src.getBytes();
+					BufferedOutputStream stream = new BufferedOutputStream(
+							new FileOutputStream(imgSrc = new File(baseDir
+									+ "/covers/" + album.getImagen_src())));
+					stream.write(bytes);
+					stream.close();
+
+				}
+			}
 			if (!file.isEmpty()) {
 				if (file.getContentType().startsWith("image")) {
 					@SuppressWarnings("unused")
@@ -86,6 +103,7 @@ public class AlbumController {
 					BufferedOutputStream stream = new BufferedOutputStream(
 							new FileOutputStream(banner = new File(
 									baseDir
+											+ "/banners/"
 											+ Utils.stringClearSpaces(album
 													.getNombre()) + ".jpg")));
 					stream.write(bytes);

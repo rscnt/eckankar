@@ -19,9 +19,15 @@ eckankar.menuajax = {
 
 						if (place === "upload") {
 							eckankar.upload.uploader();
+							eckankar.playlist.bindExternalEvents();
 						} else if (place === "artistas") {
-							eckankar.artistas.init();
+							eckankar.artistas.init(); 
+							eckankar.playlist.bindExternalEvents();
+						} else if (place === "albumes") {
+							eckankar.albumes.init();
+							eckankar.playlist.bindExternalEvents();
 						}
+						
 
 					});
 

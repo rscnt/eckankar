@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import io.rscnt.model.Album;
 import io.rscnt.model.Cancion;
 import io.rscnt.repo.CancionRepo;
 
@@ -28,7 +29,7 @@ public class CancionServiceImp implements CancionService {
 	public Cancion delete(int codigo) {
 		Cancion viejoCancion = CancionRepo.findOne(codigo);
 		if (viejoCancion == null) {
-			return null; // TODO: MANAGE THIS
+			return null;
 		}
 		CancionRepo.delete(viejoCancion);
 		return viejoCancion;
@@ -43,10 +44,9 @@ public class CancionServiceImp implements CancionService {
 	@Override
 	@Transactional
 	public Cancion update(Cancion Cancion) {
-		Cancion CancionActualizado = CancionRepo.findOne(Cancion
-				.getCodigo());
+		Cancion CancionActualizado = CancionRepo.findOne(Cancion.getCodigo());
 		if (CancionActualizado == null) {
-			return null; // TODO: MANAGE THIS
+			return null;
 		}
 		return CancionActualizado;
 	}
@@ -55,7 +55,7 @@ public class CancionServiceImp implements CancionService {
 	public Cancion findById(int codigo) {
 		Cancion CancionObtenido = CancionRepo.findOne(codigo);
 		if (CancionObtenido == null) {
-			return null; // TODO: MANAGE THIS
+			return null;
 		}
 		return CancionObtenido;
 	}
@@ -64,9 +64,19 @@ public class CancionServiceImp implements CancionService {
 	public Cancion findByNombre(String nombre) {
 		Cancion CancionObtenida = CancionRepo.findByNombre(nombre);
 		if (CancionObtenida == null) {
-			return null; // TODO: MANAGE THIS
+			return null;
 		}
 		return CancionObtenida;
+	}
+
+	@Override
+	public List<Cancion> findByAlbum(Album album) {
+		List<Cancion> cancionesAlbum = CancionRepo.findByAlbum(album);
+		if (cancionesAlbum == null) {
+			return null;
+		} else {
+			return cancionesAlbum;
+		}
 	}
 
 }

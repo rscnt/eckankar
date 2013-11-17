@@ -1,5 +1,5 @@
 /*jshint undef: true, unused: true */
-/* global base */
+/* global eckankar */
 /* global $ */
 /* global Messenger */
 
@@ -25,9 +25,38 @@ eckankar.playlist = {
 		fav : false,
 		fname : null
 	},
+
+	addSongToPlaylist : function(cancionID) {
+
+		var eckpl = this;
+
+		$.get('/cancions/' + cancionID, function(data) {
+			cancion = data;
+			eckpl.addtoPlaylist(cancion);
+		});
+	},
+
 	addtoPlaylist : function(cancion) {
 
 		var eckpl = this; // that = this, me = this.
+
+		Messenger()
+				.post(
+						{
+							message : "<div class=\"row\"><div class=\"five l-centered columns\"> :::: Agregada :::<br/><br/></div></div>"
+									+ "<div class=\"row\">"
+									+ "<div class=\"four columns\"><img class=\"lft\" src=\"/covers/"
+									+ cancion.album.nombre.replace(/\s+/g, '')
+									+ "\" /></div>"
+									+ "<div class=\"seven columns\" style=\"overflow: hidden;\">"
+									+ "<i class=\"icon-note\"></i>"
+									+ cancion.nombre
+									+ "<br/><i class=\"icon-mic\"></i>"
+									+ cancion.artista.nombre
+									+ "<br/><i class=\"icon-music\"></i>"
+									+ cancion.album.nombre + "</div>",
+							showCloseButton : true
+						});
 
 		songEL = $(_.template(Templates.playlistSong, {
 			cancion : cancion,
@@ -65,17 +94,19 @@ eckankar.playlist = {
 
 	playCurrent : function() {
 
+		var eckpl = this; // that = this, me = this.
+
 		$("#jplayer").jPlayer("clearMedia");
 
 		if (document.querySelector(".song-playlist-active") === null) {
-			this.currentPlaylist = this.stackPlaylist[0];
+			eckpl.currentPlaylist = eckpl.stackPlaylist[0];
 		}
 		$(".song-playlist").removeClass("song-playlist-active");
-		$(this.currentPlaylist.el).addClass("song-playlist-active");
+		$(eckpl.currentPlaylist.el).addClass("song-playlist-active");
 
-		this.showCurrentSong();
+		eckpl.showCurrentSong();
 
-		this.playSong(this.currentPlaylist.cancion.fName);
+		eckpl.playSong(eckpl.currentPlaylist.cancion.fName);
 
 	},
 
@@ -84,7 +115,7 @@ eckankar.playlist = {
 		if (this.currentPlaylist.id === (this.stackPlaylist.length - 1)) {
 			this.currentPlaylist = this.stackPlaylist[0];
 		} else {
-			this.currentPlaylist = this.stackPlaylist[base.playlist.currentPlaylist.id + 1];
+			this.currentPlaylist = this.stackPlaylist[eckankar.playlist.currentPlaylist.id + 1];
 		}
 
 		this.playCurrent();
@@ -122,11 +153,11 @@ eckankar.playlist = {
 				.post(
 						{
 							message : "<div class=\"row\">"
-									+ "<div class=\"three columns\"><img class=\"lft\" src=\"/covers/"
+									+ "<div class=\"four columns\"><img class=\"lft\" src=\"/covers/"
 									+ eckpl.currentPlaylist.cancion.album.nombre
 											.replace(/\s+/g, '')
 									+ "\" /></div>"
-									+ "<div class=\"eight columns\" style=\"overflow: hidden;\">"
+									+ "<div class=\"seven columns\" style=\"overflow: hidden;\">"
 									+ "<i class=\"icon-note\"></i>"
 									+ eckpl.currentPlaylist.cancion.nombre
 									+ "<br/><i class=\"icon-mic\"></i>"
@@ -226,5 +257,42 @@ eckankar.playlist = {
 					}
 					e.preventDefault();
 				});
+	},
+	bindExternalEvents : function() {
+
+		var eckpl = this; // that = this, me = this.
+
+		$(".addPlaylist").unbind("click");
+
+		$(".addPlaylist").click(function(e) {
+
+			e.preventDefault();
+
+			$this = $(this);
+			eckpl.addSongToPlaylist($this.attr("data-id"));
+
+			return false;
+
+		});
+
+		$(".addAlbPlaylist").unbind("click");
+
+		$(".addAlbPlaylist").click(function(e) {
+
+			e.preventDefault();
+
+			$this = $(this), albmID = $this.attr("data-id");
+
+			$.get('/albums/' + albmID + '/canciones', function(data) {
+				canciones = data;
+				_.each(canciones, function(cancion) {
+					eckpl.addtoPlaylist(cancion);
+				});
+
+			});
+
+			return false;
+
+		});
 	}
 }

@@ -13,91 +13,66 @@ function escapeHtml(string) {
 	});
 }
 
-eckankar.artistas = {
+eckankar.albumes = {
 
 	init : function() {
 		this.generalView();
 		return true;
 	},
 
-	loadDetailArtista : function(artistaID) {
+	loadDetailArtista : function(albumID) {
 
-		var artista, artistaDetailView, eckart = this;
+		var album, albumDetailView, eckart = this;
 
-		$.getJSON('/artistas/' + artistaID, function(data) {
+		$.getJSON('/albums/' + albumID, function(data) {
 
-			artista = data;
+			album = data;
 
-			$.get("/app/template/html/artista_detalle.html?"
+			$.get("/app/template/html/album_detalle.html?"
 					+ (new Date()).getTime(), function(responseTemplate) {
-				artistaDetailView = $(_.template(responseTemplate, {
-					artista : artista
+				albumDetailView = $(_.template(responseTemplate, {
+					album : album
 				}));
 
-				$("#artistas-container").html(artistaDetailView);
+				$("#albumes-container").html(albumDetailView);
+
+				$.get("/albums/" + albumID + "/canciones", function(canciones) {
+					_.each(canciones, function(cancion) {
+						$(_.template(Templates.albumSongView, {
+							cancion : cancion,
+							album : album
+						})).appendTo("#album-songs");
+					});
+
+					eckankar.playlist.bindExternalEvents();
+				});
 
 				eckart.bindDetailEvents();
+				eckankar.playlist.bindExternalEvents();
 			}); // sorry
 
 		});
 
 	},
 
-	loadAlbumsView : function(artistaID) {
+	loadEditView : function(albumID) {
 
-		var album, albumDetailView, eckart = this;
+		var album, albumEditView, eckart = this;
 
-		$.getJSON('/artistas/' + artistaID + '/albums/', function(albums) {
-			
-			_.each(albums, function(album) {
+		$.getJSON('/albums/' + albumID, function(data) {
 
-				albumDetailView = $(_.template(Templates.albumContainerView, {
+			album = data;
+
+			$.get("/app/template/html/album_edit.html?"
+					+ (new Date()).getTime(), function(responseTemplate) {
+
+				albumEditView = $(_.template(responseTemplate, {
 					album : album
 				}));
 
-				$("#artist-descp").html(albumDetailView);
-
-				$.get("/albums/" + album.codigo + "/canciones", function(
-						canciones) {
-
-					_.each(canciones, function(cancion) {
-						$(_.template(Templates.albumSongView, {
-							cancion : cancion,
-							album : album
-						})).appendTo("#album-songs-" + album.codigo);
-					});
-
-					eckankar.playlist.bindExternalEvents();
-				});
-
-				eckankar.playlist.bindExternalEvents();
-
-				eckart.bindDetailEvents();
-
-				console.log(album);
-
-			});
-			eckankar.playlist.bindExternalEvents();
-		});
-	},
-
-	loadEditView : function(artistaID) {
-
-		var artista, artistaEditView, eckart = this;
-
-		$.getJSON('/artistas/' + artistaID, function(data) {
-
-			artista = data;
-
-			$.get("/app/template/html/artista_edit.html?"
-					+ (new Date()).getTime(), function(responseTemplate) {
-
-				artistaEditView = $(_.template(responseTemplate, {
-					artista : artista
-				}));
-
-				$("#artistas-container").html(artistaEditView);
+				$("#albumes-container").html(albumEditView);
 				eckart.bindEditEvents();
+				eckankar.playlist.bindExternalEvents();
 			}); // sorry
 
 		});
@@ -112,9 +87,9 @@ eckankar.artistas = {
 
 		var eckart = this;
 
-		$("#back-artistas").click(function(e) {
+		$("#back-albums").click(function(e) {
 			e.preventDefault();
-			eckart.loadArtistas();
+			eckart.loadAlbumes();
 			eckankar.banner.set_banner();
 		});
 
@@ -123,11 +98,7 @@ eckankar.artistas = {
 			eckart.loadEditView($(this).attr("data-id"));
 		});
 
-		$("#data-view-albums").click(function(e) {
-			e.preventDefault();
-			console.log("data-view-albums");
-			eckart.loadAlbumsView($(this).attr("data-id"))
-		});
+		eckankar.playlist.bindExternalEvents();
 
 	},
 
@@ -137,7 +108,7 @@ eckankar.artistas = {
 				.getElementById("imgSrcChooser"), bannerchooser = document
 				.getElementById("bannerchooser");
 
-		$("#back-artista").click(function(e) {
+		$("#back-album").click(function(e) {
 			e.preventDefault();
 			eckart.loadDetailArtista($(this).attr("data-id"));
 		});
@@ -145,14 +116,12 @@ eckankar.artistas = {
 		$("#uploadBanner").click(function(e) {
 			e.preventDefault();
 			bannerchooser.click();
-		})
+		});
 
 		bannerchooser.addEventListener("change", function() {
 			var fileReader = new FileReader();
 
 			fileReader.onload = function(e) {
-
-				console.log(e.target.result);
 				$("#banner-top").attr('src', e.target.result);
 			}
 
@@ -173,7 +142,7 @@ eckankar.artistas = {
 				fileReader.onload = function(e) {
 
 					$("#artist-image-src").attr('src', e.target.result);
-					$("#artista-imgSRC").val(e.target.result);
+					$("#album-imgSRC").val(e.target.result);
 				}
 
 				fileReader.readAsDataURL(imgSrcChooser.files[0]);
@@ -185,55 +154,54 @@ eckankar.artistas = {
 						function(e) {
 							e.preventDefault();
 							$this = $(this), url = '/upload', method = 'PUT',
-									artistaID = $("#artista-codigo").val();
+									albumID = $("#album-codigo").val();
 
 							// you know 'cause shit why no?, well there's a lot
 							// of
 							// reasons.
 							$
 									.get(
-											'/artistas/' + artistaID,
+											'/albums/' + albumID,
 											function(data) {
-												var artista = data, artistData = new FormData(), result = {
+												var album = data, artistData = new FormData(), result = {
 													done : false,
 													data : null
 												};
 
-												$("#artista-descpVal")
+												$("#album-descpVal")
 														.val(
 																escapeHtml($(
-																		"#artista-edit-descp")
+																		"#album-edit-descp")
 																		.html()));
 
-												artista.nombre = $(
-														"#artista-nombre")
-														.val();
+												album.nombre = $(
+														"#album-nombre").val();
 
-												artista.descripcion = escapeHtml(
-														$("#artista-edit-descp")
+												album.descripcion = escapeHtml(
+														$("#album-edit-descp")
 																.html()).trim();
 
-												artista.imagen_src = $(
-														"#artist-image-src")
+												album.imagen_src = $(
+														"#album-image-src")
 														.attr("src");
 
 												artistData.append('nombre',
-														artista.nombre);
+														album.nombre);
 
 												artistData.append('imagen_src',
-														artista.imagen_src);
+														imgSrcChooser.files[0]);
 
 												artistData.append(
 														'descripcion',
-														artista.descripcion);
+														album.descripcion);
 
 												artistData.append('file',
 														bannerchooser.files[0]);
 
 												var posting = {
 													dataType : "json",
-													url : '/artistas/u/'
-															+ artista.codigo,
+													url : '/albums/u/'
+															+ album.codigo,
 													data : artistData,
 													type : 'POST',
 													contentType : false,
@@ -256,14 +224,14 @@ eckankar.artistas = {
 												Messenger()
 														.run(
 																{
-																	errorMessage : 'El artista: '
-																			+ artista.nombre
+																	errorMessage : 'El album: '
+																			+ album.nombre
 																			+ ' no pudo ser actualizado.',
-																	successMessage : 'El artista: '
-																			+ artista.nombre
+																	successMessage : 'El album: '
+																			+ album.nombre
 																			+ ' pudo ser actualizado.',
-																	progressMessage : 'El artista: '
-																			+ artista.nombre
+																	progressMessage : 'El album: '
+																			+ album.nombre
 																			+ ' esta siendo actualizado.'
 																}, posting);
 
@@ -272,51 +240,53 @@ eckankar.artistas = {
 
 	},
 
-	loadArtistas : function() {
+	loadAlbumes : function() {
 
-		var eckart = this, artistaGeneralView = "";
+		var eckart = this, albumGeneralView = "";
 
-		$("#artistas-container").html("");
+		$("#albumes-container").html("");
 
 		request = $.ajax({
-			url : '/artistas',
+			url : '/albums',
 			type : 'GET'
 		});
 
 		request.done(function(data) {
 
-			var artistas = data;
+			var albumes = data;
 
-			_.each(artistas, function(artista) {
+			_.each(albumes, function(album) {
 
-				var artistaEL;
+				var albumEL;
 
-				artistaEl = $(_.template(Templates.artistView, {
-					artista : artista
+				albumEl = $(_.template(Templates.albumView, {
+					album : album
 				}));
 
-				$(artistaEl).click(function(e) {
+				$(albumEl).click(function(e) {
 
 					e.preventDefault();
 
-					var artistaID = $(this).attr('data-id');
+					var albumID = $(this).attr('data-id');
 
-					$("#artistas-container").fadeOut('slow', function() {
-						$("#artistas-container").css("display", "none");
-						eckart.loadDetailArtista(artistaID);
-						$("#artistas-container").css("display", "none");
-						$("#artistas-container").fadeIn('slow');
+					$("#albumes-container").fadeOut('slow', function() {
+						$("#albumes-container").css("display", "none");
+						eckart.loadDetailArtista(albumID);
+						$("#albumes-container").css("display", "none");
+						$("#albumes-container").fadeIn('slow');
 					});
 
 				});
 
-				$("#artistas-container").append(artistaEl);
+				$("#albumes-container").append(albumEl);
 
 			});
 
 			$.each($("p.artist-descp"), function(x, k) {
 				$(k).html($(k).text());
 			});
+
+			eckankar.playlist.bindExternalEvents();
 
 		});
 
@@ -326,7 +296,7 @@ eckankar.artistas = {
 
 		var eckart = this;
 
-		eckart.loadArtistas();
+		eckart.loadAlbumes();
 
 	}
 }

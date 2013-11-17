@@ -5,8 +5,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.List;
 
+import io.rscnt.service.AlbumService;
 import io.rscnt.service.ArtistaService;
 import io.rscnt.utils.Utils;
+import io.rscnt.model.Album;
 import io.rscnt.model.Artista;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,8 @@ public class ArtistaController {
 
 	@Autowired
 	private ArtistaService artistaService;
+	@Autowired
+	private AlbumService albumService;
 
 	public ArtistaController() {
 		// TODO Auto-generated constructor stub
@@ -40,6 +44,12 @@ public class ArtistaController {
 	@ResponseBody
 	public Artista getArtistaByCodigo(@PathVariable int codigo) {
 		return artistaService.findById(codigo);
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/{codigo}/albums")
+	@ResponseBody
+	public List<Album> getAlbmsByArtista(@PathVariable int codigo) {
+		return albumService.findByArtista(artistaService.findById(codigo));
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/nombre/{nombre}")
