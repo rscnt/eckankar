@@ -71,7 +71,7 @@ public class AppContext extends WebMvcConfigurerAdapter {
 	public DriverManagerDataSource dataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-		dataSource.setUrl("jdbc:mysql://127.0.0.1:3306/disquera");
+		dataSource.setUrl("jdbc:mysql://127.0.0.1:3306/disquerac?useEncoding=true&characterEncoding=UTF-8");
 		dataSource.setUsername("_r");
 		dataSource.setPassword("foo45");
 		return dataSource;
