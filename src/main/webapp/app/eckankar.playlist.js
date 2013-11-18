@@ -43,18 +43,11 @@ eckankar.playlist = {
 		Messenger()
 				.post(
 						{
-							message : "<div class=\"row\"><div class=\"five l-centered columns\"> :::: Agregada :::<br/><br/></div></div>"
-									+ "<div class=\"row\">"
-									+ "<div class=\"four columns\"><img class=\"lft\" src=\"/covers/"
-									+ cancion.album.nombre.replace(/\s+/g, '')
-									+ "\" /></div>"
-									+ "<div class=\"seven columns\" style=\"overflow: hidden;\">"
-									+ "<i class=\"icon-note\"></i>"
-									+ cancion.nombre
-									+ "<br/><i class=\"icon-mic\"></i>"
-									+ cancion.artista.nombre
-									+ "<br/><i class=\"icon-music\"></i>"
-									+ cancion.album.nombre + "</div>",
+							message : "<div class=\"row\">"
+									+ "<div class=\"eleven columns\" style=\"overflow: hidden;\">"
+									+ "<i class=\"icon-note\"></i> Agregada: "
+									+ cancion.nombre + "<br/></div>",
+							type : 'info',
 							showCloseButton : true
 						});
 

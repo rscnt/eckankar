@@ -6,7 +6,9 @@ import java.io.FileOutputStream;
 import java.util.List;
 
 import io.rscnt.service.GeneroService;
+import io.rscnt.service.AlbumService;
 import io.rscnt.utils.Utils;
+import io.rscnt.model.Album;
 import io.rscnt.model.Genero;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +20,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
 @Controller
 @RequestMapping(value = "/generos", produces = MediaType.APPLICATION_JSON_VALUE)
 public class GeneroController {
 
 	@Autowired
 	private GeneroService generoService;
+	@Autowired
+	private AlbumService albumService;
 
 	public GeneroController() {
 		// TODO Auto-generated constructor stub
@@ -54,12 +57,18 @@ public class GeneroController {
 		return generoService.delete(codigo);
 	}
 
+	@RequestMapping(method = RequestMethod.GET, value = "/{codigo}/albums")
+	@ResponseBody
+	public List<Album> getAlbmsByArtista(@PathVariable int codigo) {
+		return albumService.findByGenero(generoService.findById(codigo));
+	}
+
+
 	@RequestMapping(method = RequestMethod.POST, value = "u/{codigo}")
 	@ResponseBody
 	public Genero updateGenero(@PathVariable int codigo,
 			@RequestParam("nombre") String nombre,
 			@RequestParam("descripcion") String descripcion,
-			@RequestParam("imagen_src") String imagen_src,
 			@RequestParam("file") MultipartFile file) {
 
 		String baseDir = System.getenv("RSCNT_DATA_MEDIA") != null ? System
@@ -71,7 +80,6 @@ public class GeneroController {
 		genero.setCodigo(codigo);
 		genero.setNombre(nombre);
 		genero.setDescripcion(descripcion);
-		genero.setImagen_src(imagen_src);
 
 		try {
 			if (!file.isEmpty()) {

@@ -88,8 +88,7 @@ Templates.albumView = "<li data-id=\"<%= album.codigo %>\" id=\"<%= album.codigo
 Templates.albumSongView = "<tr>"
 		+ "<td> <%= cancion.artista.nombre %> </td>"
 		+ "<td> <%= cancion.nombre %> </td>"
-		+ "<td> <a href=\"#add\" class=\"addPlaylist medium success btn\" data-id=\"<%= cancion.codigo %>\">  <i style=\"color: #f7f7f7;\" class=\"icon icon-plus \" /> </a> </td>"
-		+ "<td> <a href=\"#delete\" class=\"removeSong medium danger btn\" data-id=\"<%= cancion.codigo %>\"> <i style=\"color: #f7f7f7;\"  class=\"icon icon-minus \" /> </a> </td>"
+		+ "<td class=\"l-centered\"> <a href=\"#add\" class=\"addPlaylist medium success btn\" data-id=\"<%= cancion.codigo %>\">  <i style=\"color: #f7f7f7;\" class=\"icon icon-plus \" /> </a> </td>"
 		+ "</tr>";
 
 // This is bullshit, i'm sorry
@@ -99,6 +98,23 @@ Templates.albumContainerView = "<div class=\"row\">"
 		+ "<table id=\"album-songs-<%= album.codigo %>\" class=\"striped\">"
 		+ "<thead>"
 		+ "<tr>"
-		+ "<th class=\"l-centered\"><img width=\"20%\" src=\"/covers/<%= album.imagen_src %>\"/></th>"
-		+ "<td colspan=\"3\" class=\"l-centered\" style=\"color: #F7F7F7; padding: 40px;\"><h3 style=\"color: #F7F7F7;\" class=\"l-centered\"><%= album.nombre %></h3></td>"
+		+ "<th><img width=\"150px\" src=\"/covers/<%= album.imagen_src %>\"/></th>"
+		+ "<td class=\"l-centered\" style=\"color: #F7F7F7; padding: 40px 0;\"><h3 style=\"color: #F7F7F7;\" class=\"l-centered\"><%= album.nombre %></h3></td>"
+		+ "<td width=\"20%\" class=\"l-centered\" style=\"color: #F7F7F7; padding: 50px 0;\"><a href=\"#add\" class=\"addAlbPlaylist medium secondary btn\" data-id=\"<%= album.codigo %>\">  <i style=\"color: #f7f7f7;\" class=\"icon icon-plus \" /> </a></td>"
 		+ "</tr>" + "</thead>" + "</table>" + "</div>" + "</div>";
+
+// Genero {{{ 
+Templates.generoView = "<li data-id=\"<%= genero.codigo %>\" id=\"<%= genero.codigo %>\"  class=\"genero-view\">"
+	+ "<div class=\"row\"> <div class=\"twelve columns\">"
+	+ "<img class=\"genero-cover\" src=\"<%= genero.imagen_src %>\"/>"
+	+ "</div>"
+	+ "</div>"
+	+ "<div class=\"row\">"
+	+ "<div class=\"twelve columns\">"
+	+ "<h3 class=\"genero-title\"> <%= genero.nombre %> </h3>"
+	+ "</div>"
+	+ "</div>"
+	+ "<div class=\"row\">"
+	+ "<div class=\"twelve columns\">"
+	+ "<p class=\"genero-descp\" style=\"height: 50px; overflow: hidden;\">  <%= genero.descripcion %> </p>"
+// }}}

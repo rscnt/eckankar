@@ -1,0 +1,93 @@
+<div class="twelve columns">
+	<div class="row">
+		<div class="l-centered twelve columns">
+			<div class="medium btn default" style="width: 100%">
+				<a data-id="<%= genero.codigo %>" href="#"
+					class="icon-left icon-left-open-mini" id="back-artista"> <i
+					class="icon icon-left-open"> volver</i>
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="row" id="uploadForm-container">
+
+			<div class="twelve columns">
+				<div id="uploadBanner" class="medium primary btn"
+					style="width: 100%;">
+					<a> <i class="icon-doc-landscape"></i>
+					</a>
+				</div>
+			</div>
+
+			<input style="overflow: hidden; height: 0px; width: 0px;"
+				id="bannerchooser" type="file" name="file" multiple="multiple" />
+
+
+			<form id="uploadForm" action="/generos/u/<%= genero.codigo %>"
+				method="POST">
+
+				<fieldset>
+					<legend>Editar Genero</legend>
+					<ul class="l-centered">
+						<li class="prepend field"><span class="adjoined"><i
+								class="icon icon-mic"></i> </span> <input type="text"
+							placeholder="Nombre del Artista" id="artista-nombre"
+							class="xwide text input" value="<%= genero.nombre %>"></li>
+					</ul>
+					<br />
+					<div class="twelve columns" style="margin-bottom: 20px;">
+						<div class="eight columns">
+							<div id="artista-edit-descp"></div>
+						</div>
+						<div class="three columns">
+							<div id="uploadImagenSrc" class="medium primary btn"
+								style="width: 100%;">
+								<a> <i class="icon-picture"></i>
+								</a>
+							</div>
+							<input style="overflow: hidden; height: 0px; width: 0px;"
+								id="imgSrcChooser" type="file" name="file" multiple="multiple" />
+							<div class="image">
+								<img class="artist-cover" src="<%= genero.imagen_src %>"
+									id="artist-image-src" />
+							</div>
+						</div>
+					</div>
+					<input type="hidden" id="artista-codigo"
+						value="<%= genero.codigo %>" /> <input type="hidden"
+						id="artista-imgSRC" value="<%= genero.imagen_src %>" /> <input
+						type="hidden" id="artista-descpVal"
+						value="<%= genero.descripcion %>" />
+
+					<div id="submitEditArtista" class="medium secondary btn"
+						style="width: 100%;">
+						<a> Aceptar <i class="icon-pencil"></i>
+						</a>
+					</div>
+				</fieldset>
+
+
+			</form>
+
+		</div>
+	</div>
+</div>
+
+<div style="display: none;" id="descp"><%= genero.descripcion %></div>
+
+<script type="text/javascript">
+	var urlBanner = "/banners/" + "<%= genero.nombre %>".replace(/ /g, '');
+
+	$("#artista-edit-descp").redactor();
+
+	$("#artista-edit-descp").html($("#descp").text());
+
+	if ("<%= genero.nombre %>".length == 0) {
+		eckankar.banner
+				.set_img_banner($("#banner-top"), "/banners/default.jpg");
+	} else {
+		$("#artista-nombre").text('<%= genero.nombre %>');
+		eckankar.banner.set_img_banner($("#banner-top"), urlBanner);
+	}
+</script>

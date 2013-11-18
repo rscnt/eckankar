@@ -13,28 +13,28 @@ function escapeHtml(string) {
 	});
 }
 
-eckankar.artistas = {
+eckankar.generos = {
 
 	init : function() {
 		this.generalView();
 		return true;
 	},
 
-	loadDetailArtista : function(artistaID) {
+	loadDetailArtista : function(generoID) {
 
-		var artista, artistaDetailView, eckart = this;
+		var artista, generoDetailView, eckart = this;
 
-		$.getJSON('/artistas/' + artistaID, function(data) {
+		$.getJSON('/generos/' + generoID, function(data) {
 
-			artista = data;
+			genero = data;
 
-			$.get("/app/template/html/artista_detalle.html?"
+			$.get("/app/template/html/generos_detalle.html?"
 					+ (new Date()).getTime(), function(responseTemplate) {
-				artistaDetailView = $(_.template(responseTemplate, {
-					artista : artista
+				generoDetailView = $(_.template(responseTemplate, {
+					genero : genero
 				}));
 
-				$("#artistas-container").html(artistaDetailView);
+				$("#generos-container").html(generoDetailView);
 
 				eckart.bindDetailEvents();
 			}); // sorry
@@ -43,13 +43,13 @@ eckankar.artistas = {
 
 	},
 
-	loadAlbumsView : function(artistaID) {
+	loadAlbumsView : function(generoID) {
 
 		var album, albumDetailView, eckart = this;
 
-		$("#artist-descp").html("");
+		$("#genero-descp").html("");
 
-		$.getJSON('/artistas/' + artistaID + '/albums/', function(albums) {
+		$.getJSON('/generos/' + generoID + '/albums/', function(albums) {
 
 			_.each(albums, function(album) {
 
@@ -57,7 +57,7 @@ eckankar.artistas = {
 					album : album
 				}));
 
-				$("#artist-descp").append(albumDetailView);
+				$("#genero-descp").append(albumDetailView);
 
 				$.get("/albums/" + album.codigo + "/canciones", function(
 						canciones) {
@@ -80,22 +80,22 @@ eckankar.artistas = {
 		});
 	},
 
-	loadEditView : function(artistaID) {
+	loadEditView : function(generoID) {
 
 		var artista, artistaEditView, eckart = this;
 
-		$.getJSON('/artistas/' + artistaID, function(data) {
+		$.getJSON('/generos/' + generoID, function(data) {
 
 			artista = data;
 
-			$.get("/app/template/html/artista_edit.html?"
+			$.get("/app/template/html/generos_edit.html?"
 					+ (new Date()).getTime(), function(responseTemplate) {
 
 				artistaEditView = $(_.template(responseTemplate, {
-					artista : artista
+					genero : genero
 				}));
 
-				$("#artistas-container").html(artistaEditView);
+				$("#generos-container").html(artistaEditView);
 				eckart.bindEditEvents();
 			}); // sorry
 
@@ -111,7 +111,7 @@ eckankar.artistas = {
 
 		var eckart = this;
 
-		$("#back-artistas").click(function(e) {
+		$("#back-generos").click(function(e) {
 			e.preventDefault();
 			eckart.loadArtistas();
 			eckankar.banner.set_banner();
@@ -188,14 +188,14 @@ eckankar.artistas = {
 						function(e) {
 							e.preventDefault();
 							$this = $(this), url = '/upload', method = 'PUT',
-									artistaID = $("#artista-codigo").val();
+									generoID = $("#artista-codigo").val();
 
 							// you know 'cause shit why no?, well there's a lot
 							// of
 							// reasons.
 							$
 									.get(
-											'/artistas/' + artistaID,
+											'/generos/' + generoID,
 											function(data) {
 												var artista = data, artistData = new FormData(), result = {
 													done : false,
@@ -235,7 +235,7 @@ eckankar.artistas = {
 
 												var posting = {
 													dataType : "json",
-													url : '/artistas/u/'
+													url : '/generos/u/'
 															+ artista.codigo,
 													data : artistData,
 													type : 'POST',
@@ -259,13 +259,13 @@ eckankar.artistas = {
 												Messenger()
 														.run(
 																{
-																	errorMessage : 'El artista: '
+																	errorMessage : 'El genero: '
 																			+ artista.nombre
 																			+ ' no pudo ser actualizado.',
-																	successMessage : 'El artista: '
+																	successMessage : 'El genero: '
 																			+ artista.nombre
 																			+ ' pudo ser actualizado.',
-																	progressMessage : 'El artista: '
+																	progressMessage : 'El genero: '
 																			+ artista.nombre
 																			+ ' esta siendo actualizado.'
 																}, posting);
@@ -279,47 +279,47 @@ eckankar.artistas = {
 
 		var eckart = this, artistaGeneralView = "";
 
-		$("#artistas-container").html("");
+		$("#generos-container").html("");
 
 		request = $.ajax({
-			url : '/artistas',
+			url : '/generos',
 			type : 'GET'
 		});
 
 		request.done(function(data) {
 
-			var artistas = data;
+			var generos = data;
 
-			$("#artistas-container").html("");
+			$("#generos-container").html("");
 
-			_.each(artistas, function(artista) {
+			_.each(generos, function(genero) {
 
-				var artistaEL;
+				var generoEl;
 
-				artistaEl = $(_.template(Templates.artistView, {
-					artista : artista
+				generoEl = $(_.template(Templates.generoView, {
+					genero : genero
 				}));
 
-				$(artistaEl).click(function(e) {
+				$(generoEl).click(function(e) {
 
 					e.preventDefault();
 
-					var artistaID = $(this).attr('data-id');
+					var generoID = $(this).attr('data-id');
 
-					$("#artistas-container").fadeOut('slow', function() {
-						$("#artistas-container").css("display", "none");
-						eckart.loadDetailArtista(artistaID);
-						$("#artistas-container").css("display", "none");
-						$("#artistas-container").fadeIn('slow');
+					$("#generos-container").fadeOut('slow', function() {
+						$("#generos-container").css("display", "none");
+						eckart.loadDetailArtista(generoID);
+						$("#generos-container").css("display", "none");
+						$("#generos-container").fadeIn('slow');
 					});
 
 				});
 
-				$("#artistas-container").append(artistaEl);
+				$("#generos-container").append(generoEl);
 
 			});
 
-			$.each($("p.artist-descp"), function(x, k) {
+			$.each($("p.genero-descp"), function(x, k) {
 				$(k).html($(k).text());
 			});
 

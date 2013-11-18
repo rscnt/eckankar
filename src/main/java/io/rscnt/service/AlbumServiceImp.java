@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import io.rscnt.model.Album;
 import io.rscnt.model.Artista;
+import io.rscnt.model.Genero;
 import io.rscnt.repo.AlbumRepo;
 
 @Service
@@ -71,6 +72,12 @@ public class AlbumServiceImp implements AlbumService {
 	@Override
 	public List<Album> findByArtista(Artista artista) {
 		List<Album> albumesEncontrados = AlbumRepo.findByArtista(artista);
+		return albumesEncontrados;
+	}
+
+	@Override
+	public List<Album> findByGenero(Genero genero) {
+		List<Album> albumesEncontrados = AlbumRepo.findByGenero(genero);
 		return albumesEncontrados;
 	}
 }
