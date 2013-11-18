@@ -29,6 +29,9 @@ eckankar.menuajax = {
 						} else if (place == "generos") {
 							eckankar.generos.init();
 							eckankar.playlist.bindExternalEvents();
+						} else if (place == "nusuario") {
+							eckankar.usuarios.init();
+							eckankar.playlist.bindExternalEvents();
 						}
 						
 

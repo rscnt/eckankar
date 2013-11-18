@@ -54,14 +54,16 @@ public class AppContext extends WebMvcConfigurerAdapter {
 	}
 
 	// DATA {{
-//	private static final String PROPERTY_NAME_DATABASE_DRIVER = "db.driver";
-//	private static final String PROPERTY_NAME_DATABASE_PASSWORD = "db.password";
-//	private static final String PROPERTY_NAME_DATABASE_URL = "db.url";
-//	private static final String PROPERTY_NAME_DATABASE_USERNAME = "db.username";
+	// private static final String PROPERTY_NAME_DATABASE_DRIVER = "db.driver";
+	// private static final String PROPERTY_NAME_DATABASE_PASSWORD =
+	// "db.password";
+	// private static final String PROPERTY_NAME_DATABASE_URL = "db.url";
+	// private static final String PROPERTY_NAME_DATABASE_USERNAME =
+	// "db.username";
 
 	private static final String PROPERTY_NAME_HIBERNATE_DIALECT = "hibernate.dialect";
 	private static final String PROPERTY_NAME_HIBERNATE_SHOW_SQL = "hibernate.show_sql";
-	
+
 	@Resource
 	private Environment env;
 
@@ -77,11 +79,12 @@ public class AppContext extends WebMvcConfigurerAdapter {
 
 	private Properties hibProperties() {
 		Properties properties = new Properties();
-		properties.put(PROPERTY_NAME_HIBERNATE_DIALECT, "org.hibernate.dialect.MySQL5Dialect");
+		properties.put(PROPERTY_NAME_HIBERNATE_DIALECT,
+				"org.hibernate.dialect.MySQL5Dialect");
 		properties.put(PROPERTY_NAME_HIBERNATE_SHOW_SQL, "false");
 		return properties;
 	}
-	
+
 	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 		LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
@@ -89,8 +92,7 @@ public class AppContext extends WebMvcConfigurerAdapter {
 				.setDataSource((javax.sql.DataSource) dataSource());
 		entityManagerFactoryBean
 				.setPersistenceProviderClass(HibernatePersistence.class);
-		entityManagerFactoryBean
-				.setPackagesToScan("io.rscnt.model");
+		entityManagerFactoryBean.setPackagesToScan("io.rscnt.model");
 
 		entityManagerFactoryBean.setJpaProperties(hibProperties());
 

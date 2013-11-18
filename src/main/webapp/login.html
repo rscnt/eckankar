@@ -54,40 +54,6 @@
 	<script src="/assets/styles/vendor/gumby/js/libs/gumby.min.js"></script>
 	<script src="/assets/styles/vendor/gumby/js/main.js"></script>
 
-	<div class="row navbar" id="main-nav">
-		<a href="#" class="toggle" gumby-trigger="#main-nav>ul"> <i
-			class="icon-menu"></i>
-		</a>
-		<h4 class="three columns logo">
-			<a href="/"> ECKANKAR </a>
-		</h4>
-
-		<ul class="seven columns">
-			<li><a href="#artistas"> Aristas <i class="icon-users"></i>
-			</a></li>
-			<li><a href="#albumes"> Albumes <i class="icon-music"></i>
-			</a></li>
-			<li><a href="/upload"> Subir Musica <i
-					class="icon-upload-cloud"></i>
-			</a></li>
-			<li><a href="#usuario"> rscnt <i class="icon-user"></i>
-			</a>
-				<div class="dropdown">
-					<ul>
-						<li><a href="#confs#user"> <i class="icon-eye"></i> Ver
-								Perfil
-						</a></li>
-						<li><a href="#confs"> <i class="icon-cog"></i> Configurar
-								Sistema
-						</a></li>
-						<li><a href="#logout"> <i class="icon-logout"></i> Salir
-						</a></li>
-					</ul>
-				</div></li>
-		</ul>
-
-	</div>
-
 	<div class="row" id="banner-container">
 		<div class="twelve columns" id="banner-inner">
 			<!-- 			<div class="parallax" gumby-parallax="1.0" alt="" id="banner-top" />	 -->
@@ -96,49 +62,24 @@
 	</div>
 
 	<div class="row" id="main-container">
-		<div id="artistas-container" class="twelve columns"></div>
-
 		<div class="twelve columns">
-			<div class="row">
-				<div class="row" id="uploadForm-container">
-
-					<form id="uploadForm" action="/upload/banner" method="POST">
-
-						<div class="twelve columns">
-							<div id="uploadButton" class="medium primary btn"
-								style="width: 100%;">
-								<a> <i class="icon-picture"></i>
-								</a>
-							</div>
-						</div>
-
-						<input style="overflow: hidden; height: 0px; width: 0px;"
-							id="filechooser" type="file" name="file" multiple="multiple" />
-						<input type="hidden" name="name" value="Files" />
-
-						<fieldset>
-							<legend>Editar Artista</legend>
-							<ul class="l-centered">
-								<li class="prepend field"><span class="adjoined"><i
-										class="icon icon-mic"></i> </span> <input type="text"
-									placeholder="Nombre del Artista" class="xwide text input"
-									value="<%= artista.titulo %>"></li>
-							</ul>
-							<br />
-							<div id="artista-edit-descp"></div>
-							<br />
-							<div id="submitEditArtista" class="medium secondary btn"
-								style="width: 100%;">
-								<a> Editar <i class="icon-pencil"></i>
-								</a>
-							</div>
-						</fieldset>
-
-
-					</form>
-
-				</div>
-			</div>
+			<form method="POST" action="/login">
+				<fieldset>
+					<legend>Ingresar ECKANKAR</legend>
+					<ul>
+						<li class="l-centered prepend field"><span class="adjoined"><i
+								class="icon icon-user"></i></span> <input name="usuario"
+							class="xwide text input" type="text" placeholder="usuario" /></li>
+						<li class="l-centered prepend field"><span class="adjoined"><i
+								class="icon icon-lock"></i></span> <input name="password"
+							class="xwide text input" type="password" placeholder="clave" />
+						</li>
+						<li class="l-centered"><input type="submit" value="Ingresar"
+							style="height: 35px; color: #F7F7F7; width: 80%"
+							class="info btn l-centered"></input></li>
+					</ul>
+				</fieldset>
+			</form>
 		</div>
 	</div>
 
@@ -158,10 +99,6 @@
 		$(function() {
 			eckankar.init();
 			eckankar.banner.init();
-			eckankar.upload.init();
-			eckankar.playlist.init();
-			eckankar.menuajax.init();
-			$("#artista-edit-descp").redactor();
 		});
 	</script>
 
