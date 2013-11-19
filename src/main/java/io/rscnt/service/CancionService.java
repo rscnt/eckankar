@@ -19,4 +19,7 @@ public interface CancionService {
 	public Cancion findByNombre(String nombre);
 
 	public List<Cancion> findByAlbum(Album album);
+
+	public List<Cancion> searchByNombre(String nombre);
+	
 }

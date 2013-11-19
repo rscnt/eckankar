@@ -54,6 +54,12 @@ public class CancionController {
 		return cancionService.findByNombre(nombre);
 	}
 
+	@RequestMapping(method = RequestMethod.GET, value = "/busqueda/{nombre}")
+	@ResponseBody
+	public List<Cancion> searchByNombre(@PathVariable String nombre) {
+		return cancionService.searchByNombre(nombre);
+	}
+
 	@RequestMapping(method = RequestMethod.DELETE, value = "/{codigo}")
 	@ResponseBody
 	public Cancion deleteCancion(@PathVariable int codigo) {

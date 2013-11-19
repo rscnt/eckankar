@@ -79,4 +79,10 @@ public class CancionServiceImp implements CancionService {
 		}
 	}
 
+	@Override
+	public List<Cancion> searchByNombre(String nombre) {
+		List<Cancion> cancionesEncontradas = CancionRepo.searchByNombre(nombre);
+		return cancionesEncontradas;
+	}
+
 }

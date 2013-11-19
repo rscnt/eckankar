@@ -77,7 +77,7 @@ public class ArtistaController {
 				.getenv("RSCNT_DATA_MEDIA") + "banners/"
 				: "/home/_r/media/banners/";
 
-		Artista artista = artistaService.findByNombre(nombre);
+		Artista artista = artistaService.findById(codigo);
 
 		artista.setNombre(nombre);
 		artista.setDescripcion(descripcion);

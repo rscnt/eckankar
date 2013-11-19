@@ -15,4 +15,8 @@ public interface CancionRepo extends JpaRepository<Cancion, Integer> {
 
 	@Query("select c from Cancion c where c.album = :album")
 	public List<Cancion> findByAlbum(@Param("album") Album album);
+	
+
+	@Query("select c from Cancion c where c.nombre like %:nombre%")
+	public List<Cancion> searchByNombre(@Param("nombre") String nombre);
 }

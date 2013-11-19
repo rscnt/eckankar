@@ -91,7 +91,8 @@ eckankar.usuarios = {
 									}
 
 									if (data.general[0] === "success") {
-										$("#errors").html("");
+										$("#errors").html("<div class=\"row\"><div class=\"twelve columns success alert\">Se ha ingresado con extio</div></div>");
+										eckart.loadUsuarios();
 									}
 									
 								},
